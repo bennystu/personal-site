@@ -1,0 +1,249 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <!-- Nav -->
+  <header class="fixed top-0 left-0 right-0 z-50 mix-blend-multiply">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
+      <span class="font-heading text-sm font-medium tracking-tight" style="font-family: var(--font-heading)">
+        Ben Stuart
+      </span>
+      <a
+        href="mailto:ben@bstuart.co"
+        class="font-heading text-sm font-medium border border-current px-4 py-1.5 rounded-full transition-opacity duration-200 hover:opacity-60"
+        style="font-family: var(--font-heading)"
+      >
+        Get in touch
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6">
+
+    <!-- Hero -->
+    <section class="min-h-screen flex flex-col justify-center pt-24 pb-16">
+      <div>
+        <p class="section-label animate-fade-up delay-1 mb-8">Product Manager · Venture Builder · New Zealand</p>
+        <h1
+          class="animate-fade-up delay-2 text-6xl md:text-8xl font-bold mb-8 leading-none tracking-tight"
+          style="font-family: var(--font-heading)"
+        >
+          Building products<br />that actually<br />matter.
+        </h1>
+        <p
+          class="animate-fade-up delay-3 text-lg md:text-xl max-w-lg leading-relaxed"
+          style="color: var(--color-muted)"
+        >
+          I'm a product manager with a builder's mindset — I design systems before I build products,
+          and I bring technical depth to every strategic decision.
+        </p>
+        <div class="animate-fade-up delay-4 mt-10 flex gap-6 items-center">
+          <a
+            href="#contact"
+            class="font-medium text-sm border-b border-current pb-0.5 transition-opacity hover:opacity-60"
+            style="font-family: var(--font-heading)"
+          >
+            Work with me ↓
+          </a>
+          <a
+            href="https://linkedin.com/in/benjaminstuart"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm transition-opacity hover:opacity-60"
+            style="color: var(--color-muted); font-family: var(--font-heading)"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="animate-fade-up delay-5 absolute bottom-10 left-6 hidden md:flex items-center gap-2" style="color: var(--color-muted)">
+        <div class="w-px h-10 bg-current opacity-30"></div>
+        <span class="section-label">Scroll</span>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <hr style="border-color: var(--color-border)" />
+
+    <!-- About -->
+    <section id="about" class="py-24 md:py-32 grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
+      <div>
+        <p class="section-label">01 — About</p>
+      </div>
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-8" style="font-family: var(--font-heading)">
+          Systems thinker.<br />Deliberate builder.
+        </h2>
+        <div class="space-y-4 text-base leading-relaxed" style="color: var(--color-muted)">
+          <p>
+            I'm a product manager turned solopreneur, currently building an e-commerce venture portfolio
+            from New Zealand. My background spans digital product strategy, cross-functional leadership,
+            and building the kind of operational infrastructure that lets small teams move fast.
+          </p>
+          <p>
+            I bring technical fluency to the PM role — comfortable in Python, git, and AI tooling —
+            which means I spend less time translating between business and engineering and more time
+            solving the actual problem.
+          </p>
+          <p>
+            Right now I'm focused on launching a category brand in e-commerce using a content-first
+            strategy, supported by AI systems I've designed and built myself.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr style="border-color: var(--color-border)" />
+
+    <!-- Experience -->
+    <section id="experience" class="py-24 md:py-32 grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
+      <div>
+        <p class="section-label">02 — Experience</p>
+      </div>
+      <div class="space-y-12">
+        <h2 class="text-3xl md:text-4xl font-bold" style="font-family: var(--font-heading)">
+          What I've built.
+        </h2>
+
+        <!-- Experience item -->
+        <div class="space-y-8">
+          <div class="border-l-2 pl-6" style="border-color: var(--color-border)">
+            <p class="section-label mb-2">Current — Venture Builder</p>
+            <h3 class="text-xl font-semibold mb-3" style="font-family: var(--font-heading)">Founder OS & AI Systems</h3>
+            <p class="text-base leading-relaxed" style="color: var(--color-muted)">
+              Designed and built an end-to-end AI operating system for solo venture building — encompassing a
+              Notion-based second brain, Claude-powered processing agents, and structured workflows for
+              evaluating 20+ startup theses. Built for leverage: systems that let one person move at the
+              speed of a team.
+            </p>
+          </div>
+
+          <div class="border-l-2 pl-6" style="border-color: var(--color-border)">
+            <p class="section-label mb-2">
+              <!-- [TODO: Add role title + company] -->
+              Previous — Senior Product Manager
+            </p>
+            <h3 class="text-xl font-semibold mb-3" style="font-family: var(--font-heading)">
+              <!-- [TODO: Add company/product name] -->
+              E-commerce Platform
+            </h3>
+            <p class="text-base leading-relaxed" style="color: var(--color-muted)">
+              <!-- [TODO: Add 2–3 sentences of real impact statements] -->
+              Placeholder — led cross-functional product teams to ship features used by thousands of
+              customers. Reduced onboarding drop-off by X%, improved conversion by Y%.
+            </p>
+          </div>
+
+          <div class="border-l-2 pl-6" style="border-color: var(--color-border)">
+            <p class="section-label mb-2">
+              <!-- [TODO: Add role + company] -->
+              Previous — Product Manager
+            </p>
+            <h3 class="text-xl font-semibold mb-3" style="font-family: var(--font-heading)">
+              <!-- [TODO: Company/product] -->
+              Digital Product
+            </h3>
+            <p class="text-base leading-relaxed" style="color: var(--color-muted)">
+              <!-- [TODO: Impact statements] -->
+              Placeholder — define scope, validate, ship. Repeat.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr style="border-color: var(--color-border)" />
+
+    <!-- Skills / Approach -->
+    <section id="approach" class="py-24 md:py-32 grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
+      <div>
+        <p class="section-label">03 — Approach</p>
+      </div>
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-12" style="font-family: var(--font-heading)">
+          How I work.
+        </h2>
+        <div class="grid sm:grid-cols-2 gap-8">
+          <div>
+            <h3 class="font-semibold text-base mb-2" style="font-family: var(--font-heading)">Systems first</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted)">
+              Every question is "how does this connect to everything else" — not "how do I do this one thing."
+              I design infrastructure before I build features.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-base mb-2" style="font-family: var(--font-heading)">Technical depth</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted)">
+              Comfortable in Python, git, and AI tooling. I can read the code, write the spec, and
+              challenge the estimate — all in the same conversation.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-base mb-2" style="font-family: var(--font-heading)">Leverage over effort</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted)">
+              Attracted to solutions that scale. If I can automate a decision or systematise a process,
+              I will — so human attention goes where it genuinely matters.
+            </p>
+          </div>
+          <div>
+            <h3 class="font-semibold text-base mb-2" style="font-family: var(--font-heading)">Honest over comfortable</h3>
+            <p class="text-sm leading-relaxed" style="color: var(--color-muted)">
+              I'd rather surface the hard problem than avoid it. Good product decisions require
+              someone willing to say what they actually think.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr style="border-color: var(--color-border)" />
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 md:py-32 grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
+      <div>
+        <p class="section-label">04 — Contact</p>
+      </div>
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6" style="font-family: var(--font-heading)">
+          Let's talk.
+        </h2>
+        <p class="text-base leading-relaxed mb-10 max-w-md" style="color: var(--color-muted)">
+          Whether you're building something interesting, exploring a partnership, or just want to
+          compare notes — I'm open to it.
+        </p>
+        <div class="space-y-4">
+          <a
+            href="mailto:ben@bstuart.co"
+            class="flex items-center gap-3 group"
+          >
+            <span class="section-label">Email</span>
+            <span class="text-base font-medium transition-opacity group-hover:opacity-60" style="font-family: var(--font-heading)">
+              ben@bstuart.co
+            </span>
+          </a>
+          <a
+            href="https://linkedin.com/in/benjaminstuart"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-3 group"
+          >
+            <span class="section-label">LinkedIn</span>
+            <span class="text-base font-medium transition-opacity group-hover:opacity-60" style="font-family: var(--font-heading)">
+              /in/benjaminstuart
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="max-w-5xl mx-auto px-6 py-8 flex justify-between items-center" style="border-top: 1px solid var(--color-border)">
+    <span class="section-label">© 2026 Ben Stuart</span>
+    <span class="section-label">bstuart.co</span>
+  </footer>
+</Layout>
