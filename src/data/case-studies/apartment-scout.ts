@@ -54,7 +54,10 @@ export interface FlowDiagram {
 export interface JourneyDiagram {
   kind: 'journey';
   title: string;
-  columns: { heading: string; items: string[] }[];
+  beforeHeading: string;
+  afterHeading: string;
+  pairs: { before: string; after: string }[];
+  outcome: string;
 }
 
 export type DiagramDef = FlowDiagram | JourneyDiagram;
@@ -63,11 +66,14 @@ export const diagrams: Record<string, DiagramDef> = {
   'user-journey': {
     kind: 'journey',
     title: 'User journey, before and with the tool (conceptual)',
-    columns: [
-      { heading: 'Before', items: ['Browse fragmented Facebook groups', 'Interpret posts manually', 'Compare rent and quality in head'] },
-      { heading: 'With Apartment Scout', items: ['Review ranked comparable candidates', 'Develop market intuition', 'Decide whether to reach out'] },
-      { heading: 'Outcome', items: ['Selected property surfaced by the tool'] },
+    beforeHeading: 'Manual search',
+    afterHeading: 'With Apartment Scout',
+    pairs: [
+      { before: 'Browse fragmented Facebook groups', after: 'Review ranked comparable candidates' },
+      { before: 'Interpret posts manually', after: 'Develop market intuition' },
+      { before: 'Compare rent and quality in head', after: 'Decide whether to reach out' },
     ],
+    outcome: 'Selected property surfaced by the tool',
   },
   'system-architecture': {
     kind: 'flow',

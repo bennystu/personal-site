@@ -7,7 +7,7 @@ import { artifacts } from '../../../data/case-studies/apartment-scout-artifacts'
   title="Apartment Scout — Explore the build | Ben Stuart"
   description="Retrospective PRD, technical design, model evaluation, ranking spec, QA summary, decision log, and prompt-engineering notes for the Apartment Scout case study."
 >
-  <header class="fixed top-0 left-0 right-0 z-50 mix-blend-multiply">
+  <header class="fixed top-0 left-0 right-0 z-50 solid-header">
     <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
       <a href="/" class="font-heading text-sm font-medium tracking-tight" style="font-family: var(--font-heading)">
         Ben Stuart
@@ -36,13 +36,9 @@ import { artifacts } from '../../../data/case-studies/apartment-scout-artifacts'
     </section>
 
     <!-- Table of contents -->
-    <nav class="pb-16 flex flex-wrap gap-3" aria-label="Artifact sections">
+    <nav class="pb-16 grid gap-2" aria-label="Artifact sections">
       {artifacts.map((artifact) => (
-        <a
-          href={`#${artifact.id}`}
-          class="section-label border px-3 py-1.5 rounded-full"
-          style="border-color: var(--color-border)"
-        >
+        <a href={`#${artifact.id}`} class="section-label border-b border-current inline-block w-fit pb-0.5">
           {artifact.title}
         </a>
       ))}
@@ -54,7 +50,7 @@ import { artifacts } from '../../../data/case-studies/apartment-scout-artifacts'
           <h2 class="text-2xl md:text-3xl font-bold mb-2" style="font-family: var(--font-heading)">
             {artifact.title}
           </h2>
-          <p class="evidence-chip mb-8" data-tier={artifact.id === 'repository-references' ? 'unverified' : 'source-described'}>
+          <p class="section-label mb-8" style="color: var(--color-muted)">
             {artifact.statusLabel}
           </p>
 
@@ -72,9 +68,9 @@ import { artifacts } from '../../../data/case-studies/apartment-scout-artifacts'
                 <div class="overflow-x-auto my-4 rounded border" style="border-color: var(--color-border)">
                   <table class="w-full text-sm">
                     <thead>
-                      <tr style="background-color: var(--color-accent-soft)">
+                      <tr class="border-b-2" style="border-color: var(--color-text)">
                         {section.table.headers.map((h) => (
-                          <th class="text-left px-4 py-2 font-semibold" style="font-family: var(--font-heading)">{h}</th>
+                          <th class="text-left px-4 py-2 font-semibold section-label" style="color: var(--color-text)">{h}</th>
                         ))}
                       </tr>
                     </thead>

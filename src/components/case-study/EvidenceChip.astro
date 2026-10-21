@@ -11,6 +11,8 @@ const labels: Record<Props['tier'], string> = {
   illustrative: 'Illustrative',
   unverified: 'Unverified',
 };
+
+const color = tier === 'verified' ? 'var(--color-accent)' : tier === 'unverified' || tier === 'illustrative' ? 'var(--color-caution)' : 'var(--color-muted)';
 ---
 
-<span class="evidence-chip" data-tier={tier}>{labels[tier]}</span>
+<p class="section-label" style={`color: ${color}`}>{labels[tier]}</p>

@@ -6,7 +6,6 @@
   --color-muted: #6b6b6b;
   --color-border: #e2e0db;
   --color-accent: #247b73;
-  --color-accent-soft: #dae9e4;
   --color-caution: #a86b25;
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'DM Sans', sans-serif;
@@ -163,35 +162,30 @@ a:hover {
   }
 }
 
-.evidence-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-family: var(--font-heading);
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  border: 1px solid var(--color-border);
-  color: var(--color-muted);
+/* Solid (not blended) header for content-dense pages — mix-blend-multiply reads fine
+   over the homepage's sparse hero, but illegibly over continuous scrolling paragraphs. */
+.solid-header {
+  background-color: color-mix(in srgb, var(--color-bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
 }
 
-.evidence-chip[data-tier="verified"] {
-  color: var(--color-accent);
-  border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
-  background-color: var(--color-accent-soft);
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 500ms ease, transform 500ms ease;
 }
 
-.evidence-chip[data-tier="unverified"],
-.evidence-chip[data-tier="illustrative"] {
-  color: var(--color-caution);
-  border-color: color-mix(in srgb, var(--color-caution) 35%, transparent);
+[data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.diagram-frame {
-  border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
-  background-color: color-mix(in srgb, var(--color-bg) 92%, black 2%);
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

@@ -8,39 +8,48 @@ interface Props {
 const { diagram } = Astro.props;
 ---
 
-<figure class="diagram-frame p-4 md:p-6 my-6">
+<figure class="my-8" data-reveal>
   {diagram.kind === 'journey' ? (
-    <div class="grid sm:grid-cols-3 gap-4">
-      {diagram.columns.map((col) => (
-        <div>
-          <p class="section-label mb-2">{col.heading}</p>
-          <ul class="space-y-2">
-            {col.items.map((item) => (
-              <li class="text-sm rounded-lg px-3 py-2" style="background-color: var(--color-accent-soft); color: var(--color-text)">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  ) : (
     <div>
-      <div class="flex flex-wrap items-center gap-2">
-        {diagram.steps.map((step, i) => (
+      <div class="grid grid-cols-[1fr_auto_1fr] gap-x-4 gap-y-3 items-stretch mb-4">
+        <p class="section-label">{diagram.beforeHeading}</p>
+        <span></span>
+        <p class="section-label">{diagram.afterHeading}</p>
+        {diagram.pairs.map((pair) => (
           <>
-            <span class="text-sm rounded-lg px-3 py-2 inline-block" style="background-color: var(--color-accent-soft); color: var(--color-text)">
-              {step}
-            </span>
-            {i < diagram.steps.length - 1 && (
-              <span aria-hidden="true" style="color: var(--color-accent)">→</span>
-            )}
+            <div class="border-l-2 pl-4 py-1 text-sm" style="border-color: var(--color-border); color: var(--color-muted)">
+              {pair.before}
+            </div>
+            <span class="flex items-center justify-center text-sm" style="color: var(--color-accent)" aria-hidden="true">→</span>
+            <div class="border-l-2 pl-4 py-1 text-sm font-medium" style="border-color: var(--color-accent); color: var(--color-text)">
+              {pair.after}
+            </div>
           </>
         ))}
       </div>
+      <div class="border-l-2 pl-4 py-1" style="border-color: var(--color-accent)">
+        <p class="section-label mb-1">Outcome</p>
+        <p class="text-base font-semibold" style="font-family: var(--font-heading); color: var(--color-text)">{diagram.outcome}</p>
+      </div>
+    </div>
+  ) : (
+    <div>
+      <ol class="space-y-4">
+        {diagram.steps.map((step, i) => (
+          <li class="border-l-2 pl-5 relative" style="border-color: var(--color-border)">
+            <span
+              class="absolute -left-[9px] top-0 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-semibold"
+              style="background-color: var(--color-bg); border: 2px solid var(--color-border); color: var(--color-muted)"
+              aria-hidden="true"
+            >
+            </span>
+            <p class="text-sm leading-relaxed" style="color: var(--color-text)">{step}</p>
+          </li>
+        ))}
+      </ol>
 
       {diagram.branch && (
-        <div class="mt-4 pl-4 border-l-2" style="border-color: var(--color-accent)">
+        <div class="mt-4 ml-5 pl-5 border-l-2" style="border-color: var(--color-accent)">
           <p class="text-sm font-medium mb-2" style="color: var(--color-text)">{diagram.branch.question}</p>
           <div class="space-y-2">
             {diagram.branch.outcomes.map((outcome) => (
@@ -53,7 +62,7 @@ const { diagram } = Astro.props;
       )}
 
       {diagram.note && (
-        <p class="mt-4 text-sm italic" style="color: var(--color-muted)">{diagram.note}</p>
+        <p class="mt-4 ml-5 text-sm italic" style="color: var(--color-muted)">{diagram.note}</p>
       )}
     </div>
   )}

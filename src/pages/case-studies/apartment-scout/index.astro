@@ -11,7 +11,7 @@ import { hero, chapters, zoomIns, diagrams } from '../../../data/case-studies/ap
   title="Apartment Scout — Case Study | Ben Stuart"
   description="An AI-assisted apartment search tool that discovered relevant Facebook communities, made fragmented rental listings comparable, and surfaced the property we ultimately selected."
 >
-  <header class="fixed top-0 left-0 right-0 z-50 mix-blend-multiply">
+  <header class="fixed top-0 left-0 right-0 z-50 solid-header">
     <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
       <a href="/" class="font-heading text-sm font-medium tracking-tight" style="font-family: var(--font-heading)">
         Ben Stuart
@@ -102,4 +102,36 @@ import { hero, chapters, zoomIns, diagrams } from '../../../data/case-studies/ap
   </footer>
 
   <ZoomOverlaySystem zooms={zoomIns} diagrams={diagrams} />
+
+  <script>
+    function initScrollReveal() {
+      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (targets.length === 0) return;
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        targets.forEach((el) => el.setAttribute('data-revealed', 'true'));
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.setAttribute('data-revealed', 'true');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
+      );
+
+      targets.forEach((el) => observer.observe(el));
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initScrollReveal);
+    } else {
+      initScrollReveal();
+    }
+  </script>
 </Layout>
