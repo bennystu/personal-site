@@ -63,7 +63,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Acceptance criteria described in source specification',
         paragraphs: [
-          'Required hard filters behave correctly while unknowns do not auto-dismiss. Target shortlist size 5 to 20 actionable listings per normal run — a planned bar, not a demonstrated distribution. Unchanged content avoids unnecessary additional inference. Manual statuses survive re-runs under normal working synchronization. Failed groups log and skip rather than aborting the whole pipeline. New groups support one-time historical backfill. Photos fail gracefully.',
+          'Required hard filters behave correctly while unknowns do not auto-dismiss. Target shortlist size 5 to 20 actionable listings per normal run, a planned bar, not a demonstrated distribution. Unchanged content avoids unnecessary additional inference. Manual statuses survive re-runs under normal working synchronization. Failed groups log and skip rather than aborting the whole pipeline. New groups support one-time historical backfill. Photos fail gracefully.',
         ],
       },
       {
@@ -99,7 +99,7 @@ export const artifacts: Artifact[] = [
           'Collection: browser automation, originally Playwright, later Camoufox; serial execution after a parallel-session ban; permalink full-text retrieval; group and session preflight checks; timestamp and post-change fragility.',
           'Text analysis: local llama-server hosting quantized Qwen3 8B; a cheap relevance dismissal pass then detailed extraction; few-shot prompt conventions.',
           'Business logic: deduplication, disqualifiers, uncertainty handling, price normalization, score-component storage and configurable ranking, all in plain code.',
-          'Vision: Claude Haiku photo-quality assessment for qualifying listings — paid inference, deliberately scoped narrow.',
+          'Vision: Claude Haiku photo-quality assessment for qualifying listings, paid inference, deliberately scoped narrow.',
           'Persistence: local SQLite; photo hosting and cloud data via GitHub-hosted JSON; reconciliation introduced a state-integrity risk.',
           'Presentation: Streamlit, local and Streamlit Community Cloud; cached refresh displayed already-processed data rapidly but did not accelerate collection.',
           'Feedback: dismissal reason persisted then clustered using Jaccard overlap and promoted into progressive classification-prompt instructions.',
@@ -162,7 +162,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Critical limitations',
         paragraphs: [
-          'Exact sample size N and raw output are unavailable. The disagreement-only subset is biased and excludes cases where both models agree — including cases where both are jointly wrong. Haiku\'s labels were never independently verified by a human. A parsing or prompt mismatch specific to the 14B model cannot be excluded. Accuracy over all posts, and statistical significance, cannot be claimed. A model comparison is not proof of an improved downstream housing outcome.',
+          'Exact sample size N and raw output are unavailable. The disagreement-only subset is biased and excludes cases where both models agree, including cases where both are jointly wrong. Haiku\'s labels were never independently verified by a human. A parsing or prompt mismatch specific to the 14B model cannot be excluded. Accuracy over all posts, and statistical significance, cannot be claimed. A model comparison is not proof of an improved downstream housing outcome.',
         ],
       },
       {
@@ -199,7 +199,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Comparable cost',
         paragraphs: [
-          'Use advertised base rent plus known excluded recurring costs, and estimates for missing heating, electricity, and internet — avoiding double-counting charges already included. Conflicting text stays flagged as ambiguous rather than resolved by guesswork.',
+          'Use advertised base rent plus known excluded recurring costs, and estimates for missing heating, electricity, and internet, avoiding double-counting charges already included. Conflicting text stays flagged as ambiguous rather than resolved by guesswork.',
         ],
       },
       {
@@ -242,7 +242,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Coverage boundaries',
         paragraphs: [
-          'The source drafts report 258 and 330+ tests at different points. The actual test files, pass logs, and coverage report are not included in this package — do not claim independently verified coverage or production uptime beyond what is stated.',
+          'The source drafts report 258 and 330+ tests at different points. The actual test files, pass logs, and coverage report are not included in this package. Do not claim independently verified coverage or production uptime beyond what is stated.',
         ],
       },
     ],
@@ -280,15 +280,15 @@ export const artifacts: Artifact[] = [
     statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
     sections: [
       {
-        heading: 'April 2026 — phase 1',
+        heading: 'April 2026: phase 1',
         paragraphs: [
-          'Mid-April, the project begins. The initial search expands from Walloon Brabant toward five Brussels communes. Build gates include source collection, staged text extraction, photo scoring, persistence, dashboard, date-parsing repairs, and ranking-criteria revisions. The source drafts report 258 tests after early refactoring and more than 330 after criteria rebuilding — build artifacts, not customer-value outcomes on their own.',
+          'Mid-April, the project begins. The initial search expands from Walloon Brabant toward five Brussels communes. Build gates include source collection, staged text extraction, photo scoring, persistence, dashboard, date-parsing repairs, and ranking-criteria revisions. The source drafts report 258 tests after early refactoring and more than 330 after criteria rebuilding, build artifacts, not customer-value outcomes on their own.',
         ],
       },
       {
-        heading: 'May 2026 — phase 2',
+        heading: 'May 2026: phase 2',
         paragraphs: [
-          'The search changes toward shorter-term, lower-budget, rooms-and-sublet-inclusive requirements across ten communes. Data model, prompts, and ranking change accordingly. Scraping moves from Playwright toward Camoufox, with further tuning. Additional availability, timestamp, and other issues require repair. Active development drops after mid-May — this does not establish daily operational reliability, only that active building stopped.',
+          'The search changes toward shorter-term, lower-budget, rooms-and-sublet-inclusive requirements across ten communes. Data model, prompts, and ranking change accordingly. Scraping moves from Playwright toward Camoufox, with further tuning. Additional availability, timestamp, and other issues require repair. Active development drops after mid-May. This does not establish daily operational reliability, only that active building stopped.',
         ],
       },
       {
@@ -300,7 +300,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Methodological note',
         paragraphs: [
-          'The exact chronological ordering of several smaller implementation events is not proven by the available summary — no invented daily milestone dates appear here.',
+          'The exact chronological ordering of several smaller implementation events is not proven by the available summary. No invented daily milestone dates appear here.',
         ],
       },
     ],
@@ -326,16 +326,16 @@ export const artifacts: Artifact[] = [
         ],
       },
       {
-        heading: 'Illustrative prompt skeleton — not original code',
+        heading: 'Illustrative prompt skeleton (not original code)',
         paragraphs: [
           'System: You are evaluating rental listings against explicit hard constraints and soft user preferences. Use only facts supported by the post; preserve unknown values; distinguish total monthly cost claims from extra charges. Dynamic preferences: {{PERSISTED_RECURRENT_DISMISSAL_REASON_RULES}}. User: {{FULL_POST_TEXT}}. Return structured values with uncertainty flags.',
-          'This skeleton is conceptual — the product did not necessarily use this exact text.',
+          'This skeleton is conceptual. The product did not necessarily use this exact text.',
         ],
       },
       {
         heading: 'Failure controls',
         paragraphs: [
-          'Inspect complete inputs before blaming model capability — the implementation had a 1,200-character truncation bug that looked like a capability problem until found. A zero-temperature setting is not a guarantee of semantic determinism, and parsing correctness must be evaluated independently of it.',
+          'Inspect complete inputs before blaming model capability. The implementation had a 1,200-character truncation bug that looked like a capability problem until found. A zero-temperature setting is not a guarantee of semantic determinism, and parsing correctness must be evaluated independently of it.',
         ],
       },
     ],
@@ -374,13 +374,13 @@ export const artifacts: Artifact[] = [
   {
     id: 'repository-references',
     title: 'Implementation reference index',
-    statusLabel: 'Pointers only — source files are not attached to this package',
+    statusLabel: 'Pointers only, source files are not attached to this package',
     sections: [
       {
         heading: 'Referenced paths',
         paragraphs: [
-          'discover_groups.py — AI-guided multilingual group discovery. selected_groups.json — the approved source-group list. compare_models.py — the disagreement-based model-comparison harness. A SQLite database holding retained listings and review/feedback state. listings.json — the GitHub-backed cloud state. checkpoint.png and login_debug.png — incidental debug screenshots, not UI screenshots.',
-          'These paths are mentioned in the supplied summaries, but the source files themselves are not attached to this package — they are pointers for a possible future repository connection, not source-code verification performed here. Before publishing any direct repository link, it would need review for repo visibility, path sensitivity, session data, access tokens, and the privacy of any rental information it might expose.',
+          'discover_groups.py: AI-guided multilingual group discovery. selected_groups.json: the approved source-group list. compare_models.py: the disagreement-based model-comparison harness. A SQLite database holding retained listings and review/feedback state. listings.json: the GitHub-backed cloud state. checkpoint.png and login_debug.png: incidental debug screenshots, not UI screenshots.',
+          'These paths are mentioned in the supplied summaries, but the source files themselves are not attached to this package. They are pointers for a possible future repository connection, not source-code verification performed here. Before publishing any direct repository link, it would need review for repo visibility, path sensitivity, session data, access tokens, and the privacy of any rental information it might expose.',
         ],
       },
     ],
