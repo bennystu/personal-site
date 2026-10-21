@@ -259,14 +259,6 @@ export const zoomIns: ZoomIn[] = [
     diagramId: 'collection-incident',
   },
   {
-    id: 'requirements-pivot',
-    title: 'The brief changed halfway through',
-    question: 'What counted as "an acceptable place" changed mid-project.',
-    body: "Partway through, the actual search changed: lower budget, shorter stay, more communes, rooms and sublets now fair game. That meant new fields and dropping bedroom-count as a filter entirely. Why it changed is personal, and staying off this page.",
-    takeaway: 'Changing needs can break your filters, not just your thresholds.',
-    evidenceTier: 'verified',
-  },
-  {
     id: 'ranking-evolution',
     title: 'The ranking formula was wrong, twice',
     question: "A phone number isn't as important as price. An early version said it was.",
@@ -507,7 +499,7 @@ export const chapters: Chapter[] = [
     heading: 'Where to use a model, where to use code',
     summary: 'A different tool for each kind of uncertainty.',
     body: "Here's how that split worked in practice:\n\n- Claude Haiku for open-ended discovery, always with me approving the result\n- The small local model for the repetitive reading-and-extracting work, since it runs for free\n- Plain code wherever there's one right answer, no reason to pay for a model call when a rule gives the same result every time\n- The pricier vision model only once everything cheaper already said yes\n\nThe ranking formula needed fixing more than once too. An early version rated \"has a phone number\" as important as price. I caught that and cut its weight by two-thirds, because a phone number is a nice-to-have, not a dealbreaker. Ranking isn't really math. It's a list of opinions about what matters, just written down.",
-    zoomIds: ['requirements-pivot', 'ranking-evolution', 'feedback', 'model-evaluation', 'cloud-github', 'input-truncation', 'reclassification', 'local-qwen', 'vision', 'uncertainty'],
+    zoomIds: ['ranking-evolution', 'feedback', 'model-evaluation', 'cloud-github', 'input-truncation', 'reclassification', 'local-qwen', 'vision', 'uncertainty'],
   },
   {
     id: 'impact',

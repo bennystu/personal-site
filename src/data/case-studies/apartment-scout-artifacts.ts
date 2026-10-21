@@ -34,15 +34,9 @@ export const artifacts: Artifact[] = [
         ],
       },
       {
-        heading: 'Version 1 search scope',
+        heading: 'Search scope',
         paragraphs: [
-          'Five Brussels communes near Metro Line 5: Auderghem, Etterbeek, Watermael-Boitsfort, Ixelles, Woluwe-Saint-Pierre. Budget approximately €1,250 all-in, furnished, at least 35m², available by June 2026, domiciliation required, proximity to Metro Line 5 preferred.',
-        ],
-      },
-      {
-        heading: 'Version 2 changed scope',
-        paragraphs: [
-          'Ten communes, approximately €1,000 budget, June to September short-term window, rooms/colocation and sublets permitted, domiciliation no longer necessary. The detailed personal reason for the change stays private.',
+          'The search started in Walloon Brabant, near Genval, and moved to five specific Brussels communes near Metro Line 5: Auderghem, Etterbeek, Watermael-Boitsfort, Ixelles, Woluwe-Saint-Pierre. Budget approximately €1,250 all-in, furnished, at least 35m², available by June 2026, domiciliation required, proximity to Metro Line 5 preferred.',
         ],
       },
       {
@@ -243,7 +237,6 @@ export const artifacts: Artifact[] = [
             ['Direct dismissal feedback', 'Too many nuanced preferences for an MVP schema', 'Lexical grouping is crude, not semantic', 'Feedback loop wired into the live classification prompt'],
             ['Sequential browser collection', 'Parallelism caused a ban', 'Slower runs', 'Reliability over raw speed'],
             ['GitHub JSON cloud state', 'Avoid hosted DB setup', 'Two sources of truth', 'Free, with a disclosed reconciliation risk'],
-            ['Schema change after the pivot', 'Rooms and sublets differ from apartments', 'Refactor effort', 'Shipped same build phase'],
             ['Phone weight reduced', 'Convenience is less important than price', 'Earlier rankings were wrong', 'Documented in v3.1'],
           ],
         },
@@ -261,9 +254,9 @@ export const artifacts: Artifact[] = [
         ],
       },
       {
-        heading: 'May 2026: phase 2',
+        heading: 'May 2026: reliability work continues',
         paragraphs: [
-          'The actual search changes: shorter-term, lower-budget, rooms-and-sublets now in scope, across ten communes. Data model, prompts, and ranking change with it. Scraping moves from Playwright to Camoufox, with further tuning. Active development winds down after mid-May.',
+          'Scraping moves from Playwright to Camoufox after the account ban, with further tuning to actually stop detection. Timestamp parsing gets repaired again as Facebook changes its markup. Active development winds down after mid-May.',
         ],
       },
       {
