@@ -41,6 +41,24 @@ const chapterZooms = chapter.zoomIds
       <DiagramFrame diagram={diagrams[chapter.diagramId]} />
     )}
 
+    {chapter.screenshots && chapter.screenshots.length > 0 && (
+      <div class="my-8 space-y-6">
+        <p class="section-label">Real screenshots, taken directly from the app</p>
+        {chapter.screenshots.map((shot) => (
+          <figure>
+            <img
+              src={shot.src}
+              alt={shot.caption}
+              loading="lazy"
+              class="w-full rounded-lg border"
+              style="border-color: var(--color-border)"
+            />
+            <figcaption class="mt-2 text-sm" style="color: var(--color-muted)">{shot.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    )}
+
     {chapterZooms.length > 0 && (
       <div class="mt-8 pt-6 border-t" style="border-color: var(--color-border)">
         <p class="section-label mb-3">Go deeper</p>

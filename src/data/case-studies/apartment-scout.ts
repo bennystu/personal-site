@@ -13,6 +13,11 @@ export interface ZoomIn {
   diagramId?: string;
 }
 
+export interface Screenshot {
+  src: string;
+  caption: string;
+}
+
 export interface Chapter {
   id: string;
   ordinal: number;
@@ -22,6 +27,7 @@ export interface Chapter {
   body: string;
   zoomIds: string[];
   diagramId?: string;
+  screenshots?: Screenshot[];
 }
 
 export const hero = {
@@ -302,6 +308,11 @@ export const chapters: Chapter[] = [
     body: "Claude Haiku found the Facebook groups worth watching, I approved all 26 by hand. A local Qwen3 8B model read every post and pulled out the useful fields. Plain code filtered and deduplicated. Claude Haiku looked at photos, but only for listings that survived everything cheaper first. Then a ranked shortlist, in a Streamlit dashboard.\n\nIt didn't need to be perfect to be useful. Every run turned a pile of random posts into a short, comparable list. Just seeing real prices side by side made me faster and more confident, even on the ones I passed on.",
     zoomIds: ['group-discovery', 'scraper-failures'],
     diagramId: 'system-architecture',
+    screenshots: [
+      { src: '/case-studies/apartment-scout/dashboard-list.png', caption: 'The actual dashboard, filters on the left, ranked listings on the right.' },
+      { src: '/case-studies/apartment-scout/dashboard-photos.png', caption: "A listing expanded, with the photos Claude Haiku scored." },
+      { src: '/case-studies/apartment-scout/dashboard-inquiry.png', caption: 'The auto-written French inquiry message for a selected listing.' },
+    ],
   },
   {
     id: 'decisions',
