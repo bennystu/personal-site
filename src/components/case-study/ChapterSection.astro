@@ -26,15 +26,23 @@ const chapterZooms = chapter.zoomIds
     <p class="section-label">{chapter.eyebrow}</p>
   </div>
   <div data-reveal>
-    <h2 class="text-3xl md:text-4xl font-bold mb-3" style="font-family: var(--font-heading)">
+    <h2 class="text-4xl md:text-6xl font-bold mb-4 leading-[1.05] tracking-tight" style="font-family: var(--font-heading)">
       {chapter.heading}
     </h2>
     <p class="text-lg md:text-xl mb-6" style="color: var(--color-accent)">{chapter.summary}</p>
 
     <div class="space-y-4 text-base leading-relaxed" style="color: var(--color-text)">
-      {chapter.body.split('\n\n').map((paragraph) => (
-        <p>{paragraph}</p>
-      ))}
+      {chapter.body.split('\n\n').map((block) =>
+        block.trimStart().startsWith('- ') ? (
+          <ul class="space-y-2 list-disc pl-5">
+            {block.split('\n').map((line) => (
+              <li>{line.replace(/^- /, '')}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>{block}</p>
+        )
+      )}
     </div>
 
     {chapter.diagramId && diagrams[chapter.diagramId] && (

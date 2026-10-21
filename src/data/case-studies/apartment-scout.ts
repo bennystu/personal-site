@@ -305,7 +305,7 @@ export const chapters: Chapter[] = [
     eyebrow: '03 — What I built',
     heading: 'From scattered posts to a shortlist',
     summary: 'One tool, built around the decisions I actually needed to make.',
-    body: "Claude Haiku found the Facebook groups worth watching, I approved all 26 by hand. A local Qwen3 8B model read every post and pulled out the useful fields. Plain code filtered and deduplicated. Claude Haiku looked at photos, but only for listings that survived everything cheaper first. Then a ranked shortlist, in a Streamlit dashboard.\n\nIt didn't need to be perfect to be useful. Every run turned a pile of random posts into a short, comparable list. Just seeing real prices side by side made me faster and more confident, even on the ones I passed on.",
+    body: "One pipeline, one tool per job:\n\n- Claude Haiku found the Facebook groups worth watching, I approved all 26 by hand\n- A local Qwen3 8B model read every post and pulled out the useful fields\n- Plain code filtered and deduplicated\n- Claude Haiku looked at photos, but only for listings that survived everything cheaper first\n- Then a ranked shortlist, in a Streamlit dashboard\n\nIt didn't need to be perfect to be useful. Every run turned a pile of random posts into a short, comparable list. Just seeing real prices side by side made me faster and more confident, even on the ones I passed on.",
     zoomIds: ['group-discovery', 'scraper-failures'],
     diagramId: 'system-architecture',
     screenshots: [
@@ -320,7 +320,7 @@ export const chapters: Chapter[] = [
     eyebrow: '04 — Hard calls',
     heading: 'Where to use a model, where to use code',
     summary: 'A different tool for each kind of uncertainty.',
-    body: "Claude Haiku for open-ended discovery, always with me approving the result. The small local model for the repetitive reading-and-extracting work, since it runs for free. Plain code wherever there's one right answer, no reason to pay for a model call when a rule gives the same result every time. The pricier vision model only once everything cheaper already said yes.\n\nThe ranking formula needed fixing more than once too. An early version rated \"has a phone number\" as important as price. I caught that and cut its weight by two-thirds, because a phone number is a nice-to-have, not a dealbreaker. Ranking isn't really math. It's a list of opinions about what matters, just written down.",
+    body: "A different tool for each kind of uncertainty:\n\n- Claude Haiku for open-ended discovery, always with me approving the result\n- The small local model for the repetitive reading-and-extracting work, since it runs for free\n- Plain code wherever there's one right answer, no reason to pay for a model call when a rule gives the same result every time\n- The pricier vision model only once everything cheaper already said yes\n\nThe ranking formula needed fixing more than once too. An early version rated \"has a phone number\" as important as price. I caught that and cut its weight by two-thirds, because a phone number is a nice-to-have, not a dealbreaker. Ranking isn't really math. It's a list of opinions about what matters, just written down.",
     zoomIds: ['requirements-pivot', 'ranking-evolution', 'feedback', 'model-evaluation', 'cloud-github'],
   },
   {
