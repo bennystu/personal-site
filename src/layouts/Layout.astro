@@ -27,6 +27,12 @@ const {
     <meta name="author" content="Ben Stuart" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <script is:inline>
+      // Scroll-reveal content hides by default only when this class is present.
+      // Without it (JS disabled, blocked, or errored before this runs), everything
+      // stays visible, so the page degrades to "no animation", not "no content".
+      document.documentElement.classList.add('js');
+    </script>
   </head>
   <body>
     <slot />

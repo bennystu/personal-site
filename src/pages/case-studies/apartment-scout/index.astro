@@ -126,6 +126,15 @@ import { hero, chapters, zoomIns, diagrams } from '../../../data/case-studies/ap
       );
 
       targets.forEach((el) => observer.observe(el));
+
+      // Safety net: if an element somehow never gets an intersection callback
+      // (observer edge cases, restored scroll position, etc.), reveal it anyway
+      // after a few seconds rather than leaving it invisible indefinitely.
+      setTimeout(() => {
+        targets.forEach((el) => {
+          if (!el.hasAttribute('data-revealed')) el.setAttribute('data-revealed', 'true');
+        });
+      }, 4000);
     }
 
     if (document.readyState === 'loading') {

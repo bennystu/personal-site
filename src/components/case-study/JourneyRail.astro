@@ -25,6 +25,7 @@ const { chapters } = Astro.props;
         data-journey-dot
         data-chapter-id={chapter.id}
         aria-label={chapter.heading}
+        tabindex="-1"
       >
         <span
           class="block w-2.5 h-2.5 rounded-full border-2 transition-colors"

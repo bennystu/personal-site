@@ -171,7 +171,10 @@ a:hover {
   border-bottom: 1px solid var(--color-border);
 }
 
-[data-reveal] {
+/* Hidden-until-revealed only applies once .js confirms the reveal script can
+   actually run. No JS (disabled, blocked, or erroring) means content shows
+   immediately instead of staying invisible forever — see Layout.astro. */
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 500ms ease, transform 500ms ease;
@@ -182,7 +185,7 @@ a:hover {
   transform: translateY(0);
 }
 
-[data-reveal] ul li {
+.js [data-reveal] ul li {
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 400ms ease, transform 400ms ease;
@@ -216,6 +219,18 @@ a:hover {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  [data-title-scale] {
+    transform: none !important;
+  }
+}
+
+@media print {
+  /* Scroll-position-coupled effects compute against the real viewport; a printed
+     page has no scroll position, so these must not run at all. */
+  [data-reveal], [data-reveal] ul li {
+    opacity: 1 !important;
+    transform: none !important;
   }
   [data-title-scale] {
     transform: none !important;
