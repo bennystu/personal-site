@@ -5,12 +5,35 @@
   --color-text: #1a1a1a;
   --color-muted: #6b6b6b;
   --color-border: #e2e0db;
+  --color-accent: #247b73;
+  --color-accent-soft: #dae9e4;
+  --color-caution: #a86b25;
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up {
+    animation: none;
+    opacity: 1;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+[data-chapter-section] {
+  scroll-margin-top: 112px;
+}
+
+@media (min-width: 768px) {
+  [data-chapter-section] {
+    scroll-margin-top: 90px;
+  }
 }
 
 body {
@@ -69,4 +92,106 @@ a {
 a:hover {
   opacity: 0.7;
   transition: opacity 0.2s ease;
+}
+
+/* Case study: journey rail + zoom overlays */
+
+.journey-rail-track {
+  background-color: var(--color-border);
+}
+
+.journey-rail-fill {
+  background-color: var(--color-accent);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 100ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-rail-fill {
+    transition: none;
+  }
+}
+
+.zoom-trigger {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  text-underline-offset: 3px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.zoom-trigger:hover,
+.zoom-trigger:focus-visible {
+  opacity: 1;
+  text-decoration-color: var(--color-accent);
+}
+
+.zoom-trigger:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.zoom-overlay-backdrop {
+  background-color: rgba(23, 36, 43, 0.4);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.zoom-overlay-backdrop[data-open="true"] {
+  opacity: 1;
+}
+
+.zoom-overlay-panel {
+  background-color: var(--color-bg);
+  transform: translateY(12px);
+  opacity: 0;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.zoom-overlay-panel[data-open="true"] {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoom-overlay-backdrop,
+  .zoom-overlay-panel {
+    transition: none;
+  }
+}
+
+.evidence-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  color: var(--color-muted);
+}
+
+.evidence-chip[data-tier="verified"] {
+  color: var(--color-accent);
+  border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  background-color: var(--color-accent-soft);
+}
+
+.evidence-chip[data-tier="unverified"],
+.evidence-chip[data-tier="illustrative"] {
+  color: var(--color-caution);
+  border-color: color-mix(in srgb, var(--color-caution) 35%, transparent);
+}
+
+.diagram-frame {
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  background-color: color-mix(in srgb, var(--color-bg) 92%, black 2%);
 }

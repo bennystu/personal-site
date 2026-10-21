@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const caseStudies = [
+  {
+    slug: 'apartment-scout',
+    title: 'Apartment Scout',
+    summary:
+      "An AI-assisted apartment search tool that discovered relevant Facebook communities, made fragmented rental listings comparable, and surfaced the property we ultimately selected.",
+    period: 'April–May 2026',
+  },
+];
+---
+
+<Layout
+  title="Case Studies | Ben Stuart"
+  description="Product case studies — built, shipped, and written up with the same evidence discipline I bring to the work itself."
+>
+  <header class="fixed top-0 left-0 right-0 z-50 mix-blend-multiply">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
+      <a href="/" class="font-heading text-sm font-medium tracking-tight" style="font-family: var(--font-heading)">
+        Ben Stuart
+      </a>
+      <a
+        href="mailto:ben@bstuart.co"
+        class="font-heading text-sm font-medium border border-current px-4 py-1.5 rounded-full transition-opacity duration-200 hover:opacity-60"
+        style="font-family: var(--font-heading)"
+      >
+        Get in touch
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6">
+    <section class="pt-32 pb-20">
+      <p class="section-label mb-6">Case studies</p>
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-[1.05]" style="font-family: var(--font-heading)">
+        What I've actually built.
+      </h1>
+      <p class="text-lg md:text-xl max-w-xl leading-relaxed" style="color: var(--color-muted)">
+        Reverse-engineered from real code, git history, and direct confirmation — not written from memory.
+        Each one states plainly what's verified, what's described but unverified, and what's simply unknown.
+      </p>
+    </section>
+
+    <hr style="border-color: var(--color-border)" />
+
+    <section class="py-12">
+      {caseStudies.map((study) => (
+        <a href={`/case-studies/${study.slug}`} class="block group py-10 border-b" style="border-color: var(--color-border)">
+          <div class="grid md:grid-cols-[1fr_2fr] gap-6 md:gap-16">
+            <p class="section-label">{study.period}</p>
+            <div>
+              <h2
+                class="text-2xl md:text-3xl font-bold mb-3 transition-opacity group-hover:opacity-60"
+                style="font-family: var(--font-heading)"
+              >
+                {study.title} →
+              </h2>
+              <p class="text-base leading-relaxed" style="color: var(--color-muted)">{study.summary}</p>
+            </div>
+          </div>
+        </a>
+      ))}
+    </section>
+  </main>
+
+  <footer class="max-w-5xl mx-auto px-6 py-8 flex justify-between items-center" style="border-top: 1px solid var(--color-border)">
+    <span class="section-label">© 2026 Ben Stuart</span>
+    <a href="/" class="section-label">bstuart.co</a>
+  </footer>
+</Layout>

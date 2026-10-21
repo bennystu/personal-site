@@ -1,0 +1,111 @@
+---
+import type { Chapter } from '../../data/case-studies/apartment-scout';
+
+interface Props {
+  chapters: Chapter[];
+}
+
+const { chapters } = Astro.props;
+---
+
+<!-- Desktop rail -->
+<aside
+  class="hidden md:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col items-center gap-0"
+  data-journey-rail
+  aria-hidden="true"
+>
+  <div class="relative w-px" style={`height: ${(chapters.length - 1) * 64}px`}>
+    <div class="journey-rail-track absolute inset-0 w-px"></div>
+    <div class="journey-rail-fill absolute top-0 left-0 w-px h-full" data-journey-fill></div>
+    {chapters.map((chapter, i) => (
+      <a
+        href={`#chapter-${chapter.id}`}
+        class="absolute -translate-x-1/2 -translate-y-1/2 flex items-center group"
+        style={`top: ${i * 64}px; left: 0px`}
+        data-journey-dot
+        data-chapter-id={chapter.id}
+        aria-label={chapter.heading}
+      >
+        <span
+          class="block w-2.5 h-2.5 rounded-full border-2 transition-colors"
+          style="border-color: var(--color-border); background-color: var(--color-bg)"
+          data-journey-marker
+        ></span>
+        <span
+          class="section-label absolute left-6 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity"
+          style="color: var(--color-muted)"
+        >
+          {chapter.eyebrow}
+        </span>
+      </a>
+    ))}
+  </div>
+</aside>
+
+<!-- Mobile progress indicator (sits just below the fixed header) -->
+<div class="md:hidden fixed left-0 right-0 z-40" style="top: 74px" data-journey-mobile>
+  <div class="journey-rail-track h-[3px] w-full">
+    <div class="journey-rail-fill h-full" data-journey-fill-mobile style="transform-origin: left; transform: scaleX(0)"></div>
+  </div>
+  <p class="section-label px-4 py-2" style="background-color: var(--color-bg)" data-journey-label>01 — Customer pain</p>
+</div>
+
+<script>
+  function initJourneyRail() {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-chapter-section]'));
+    if (sections.length === 0) return;
+
+    const fillEls = document.querySelectorAll<HTMLElement>('[data-journey-fill]');
+    const fillMobile = document.querySelector<HTMLElement>('[data-journey-fill-mobile]');
+    const mobileLabel = document.querySelector<HTMLElement>('[data-journey-label]');
+    const dots = document.querySelectorAll<HTMLElement>('[data-journey-dot]');
+
+    const firstTop = () => sections[0].offsetTop;
+    const lastBottom = () => {
+      const last = sections[sections.length - 1];
+      return last.offsetTop + last.offsetHeight;
+    };
+
+    function update() {
+      const scrollY = window.scrollY + window.innerHeight * 0.3;
+      const start = firstTop();
+      const end = lastBottom();
+      const fraction = Math.max(0, Math.min(1, (scrollY - start) / Math.max(1, end - start)));
+
+      fillEls.forEach((el) => {
+        el.style.transform = `scaleY(${fraction})`;
+      });
+      if (fillMobile) fillMobile.style.transform = `scaleX(${fraction})`;
+
+      let current = sections[0];
+      for (const section of sections) {
+        if (scrollY >= section.offsetTop) current = section;
+      }
+      const currentId = current.dataset.chapterId;
+      const eyebrow = current.dataset.chapterEyebrow || '';
+      if (mobileLabel) mobileLabel.textContent = eyebrow;
+
+      dots.forEach((dot) => {
+        const marker = dot.querySelector<HTMLElement>('[data-journey-marker]');
+        if (!marker) return;
+        if (dot.dataset.chapterId === currentId) {
+          marker.style.borderColor = 'var(--color-accent)';
+          marker.style.backgroundColor = 'var(--color-accent)';
+        } else {
+          marker.style.borderColor = 'var(--color-border)';
+          marker.style.backgroundColor = 'var(--color-bg)';
+        }
+      });
+    }
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initJourneyRail);
+  } else {
+    initJourneyRail();
+  }
+</script>

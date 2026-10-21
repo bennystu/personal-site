@@ -1,0 +1,16 @@
+---
+interface Props {
+  id: string;
+  label: string;
+}
+
+const { id, label } = Astro.props;
+---
+
+<button
+  type="button"
+  class="zoom-trigger"
+  data-zoom-trigger
+  data-zoom-id={id}
+  aria-haspopup="dialog"
+>{label}</button>

@@ -1,0 +1,105 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { artifacts } from '../../../data/case-studies/apartment-scout-artifacts';
+---
+
+<Layout
+  title="Apartment Scout — Explore the build | Ben Stuart"
+  description="Retrospective PRD, technical design, model evaluation, ranking spec, QA summary, decision log, and prompt-engineering notes for the Apartment Scout case study."
+>
+  <header class="fixed top-0 left-0 right-0 z-50 mix-blend-multiply">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
+      <a href="/" class="font-heading text-sm font-medium tracking-tight" style="font-family: var(--font-heading)">
+        Ben Stuart
+      </a>
+      <a
+        href="/case-studies/apartment-scout"
+        class="font-heading text-sm font-medium border border-current px-4 py-1.5 rounded-full transition-opacity duration-200 hover:opacity-60"
+        style="font-family: var(--font-heading)"
+      >
+        ← Back to case study
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6">
+    <section class="pt-32 pb-16">
+      <p class="section-label mb-6">Apartment Scout · Explore the build</p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-6" style="font-family: var(--font-heading)">
+        The product and engineering record
+      </h1>
+      <p class="text-lg leading-relaxed" style="color: var(--color-muted)">
+        These documents were reconstructed after the build, from the real codebase, git history, and direct
+        confirmation — not written contemporaneously. Each is labeled with how it was reconstructed, and every
+        document calls out what it can't verify rather than filling the gap with a plausible-sounding guess.
+      </p>
+    </section>
+
+    <!-- Table of contents -->
+    <nav class="pb-16 flex flex-wrap gap-3" aria-label="Artifact sections">
+      {artifacts.map((artifact) => (
+        <a
+          href={`#${artifact.id}`}
+          class="section-label border px-3 py-1.5 rounded-full"
+          style="border-color: var(--color-border)"
+        >
+          {artifact.title}
+        </a>
+      ))}
+    </nav>
+
+    {artifacts.map((artifact) => (
+      <>
+        <section id={artifact.id} class="py-12">
+          <h2 class="text-2xl md:text-3xl font-bold mb-2" style="font-family: var(--font-heading)">
+            {artifact.title}
+          </h2>
+          <p class="evidence-chip mb-8" data-tier={artifact.id === 'repository-references' ? 'unverified' : 'source-described'}>
+            {artifact.statusLabel}
+          </p>
+
+          {artifact.sections.map((section) => (
+            <div class="mb-8">
+              {section.heading && (
+                <h3 class="text-lg font-semibold mb-3" style="font-family: var(--font-heading)">
+                  {section.heading}
+                </h3>
+              )}
+              {section.paragraphs.map((p) => (
+                <p class="text-base leading-relaxed mb-3" style="color: var(--color-text)">{p}</p>
+              ))}
+              {section.table && (
+                <div class="overflow-x-auto my-4 rounded border" style="border-color: var(--color-border)">
+                  <table class="w-full text-sm">
+                    <thead>
+                      <tr style="background-color: var(--color-accent-soft)">
+                        {section.table.headers.map((h) => (
+                          <th class="text-left px-4 py-2 font-semibold" style="font-family: var(--font-heading)">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {section.table.rows.map((row) => (
+                        <tr class="border-t" style="border-color: var(--color-border)">
+                          {row.map((cell) => (
+                            <td class="px-4 py-2 align-top" style="color: var(--color-text)">{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          ))}
+        </section>
+        <hr style="border-color: var(--color-border)" />
+      </>
+    ))}
+  </main>
+
+  <footer class="max-w-3xl mx-auto px-6 py-8 flex justify-between items-center" style="border-top: 1px solid var(--color-border)">
+    <span class="section-label">© 2026 Ben Stuart</span>
+    <a href="/" class="section-label">bstuart.co</a>
+  </footer>
+</Layout>

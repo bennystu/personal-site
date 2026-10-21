@@ -9,13 +9,22 @@ import Layout from '../layouts/Layout.astro';
       <span class="font-heading text-sm font-medium tracking-tight" style="font-family: var(--font-heading)">
         Ben Stuart
       </span>
-      <a
-        href="mailto:ben@bstuart.co"
-        class="font-heading text-sm font-medium border border-current px-4 py-1.5 rounded-full transition-opacity duration-200 hover:opacity-60"
-        style="font-family: var(--font-heading)"
-      >
-        Get in touch
-      </a>
+      <div class="flex items-center gap-4">
+        <a
+          href="/case-studies"
+          class="font-heading text-sm font-medium transition-opacity duration-200 hover:opacity-60"
+          style="font-family: var(--font-heading)"
+        >
+          Case studies
+        </a>
+        <a
+          href="mailto:ben@bstuart.co"
+          class="font-heading text-sm font-medium border border-current px-4 py-1.5 rounded-full transition-opacity duration-200 hover:opacity-60"
+          style="font-family: var(--font-heading)"
+        >
+          Get in touch
+        </a>
+      </div>
     </div>
   </header>
 
@@ -157,10 +166,47 @@ import Layout from '../layouts/Layout.astro';
 
     <hr style="border-color: var(--color-border)" />
 
+    <!-- Case Studies -->
+    <section id="case-studies" class="py-24 md:py-32 grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
+      <div>
+        <p class="section-label">03 — Case studies</p>
+      </div>
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-8" style="font-family: var(--font-heading)">
+          How I actually work.
+        </h2>
+        <p class="text-base leading-relaxed mb-10 max-w-md" style="color: var(--color-muted)">
+          Full write-ups of real projects — grounded in the actual code and git history, not written from memory.
+        </p>
+        <a href="/case-studies/apartment-scout" class="block group border-l-2 pl-6 mb-6" style="border-color: var(--color-border)">
+          <p class="section-label mb-2">April–May 2026</p>
+          <h3
+            class="text-xl font-semibold mb-3 transition-opacity group-hover:opacity-60"
+            style="font-family: var(--font-heading)"
+          >
+            Apartment Scout →
+          </h3>
+          <p class="text-base leading-relaxed" style="color: var(--color-muted)">
+            An AI-assisted apartment search tool that discovered relevant Facebook communities, made
+            fragmented listings comparable, and surfaced the property we ultimately selected.
+          </p>
+        </a>
+        <a
+          href="/case-studies"
+          class="font-heading text-sm font-medium border-b border-current pb-0.5 transition-opacity hover:opacity-60"
+          style="font-family: var(--font-heading)"
+        >
+          All case studies →
+        </a>
+      </div>
+    </section>
+
+    <hr style="border-color: var(--color-border)" />
+
     <!-- Skills / Approach -->
     <section id="approach" class="py-24 md:py-32 grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
       <div>
-        <p class="section-label">03 — Approach</p>
+        <p class="section-label">04 — Approach</p>
       </div>
       <div>
         <h2 class="text-3xl md:text-4xl font-bold mb-12" style="font-family: var(--font-heading)">
@@ -204,7 +250,7 @@ import Layout from '../layouts/Layout.astro';
     <!-- Contact -->
     <section id="contact" class="py-24 md:py-32 grid md:grid-cols-[1fr_2fr] gap-12 md:gap-24">
       <div>
-        <p class="section-label">04 — Contact</p>
+        <p class="section-label">05 — Contact</p>
       </div>
       <div>
         <h2 class="text-3xl md:text-4xl font-bold mb-6" style="font-family: var(--font-heading)">

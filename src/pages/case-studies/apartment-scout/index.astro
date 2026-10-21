@@ -1,0 +1,105 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ChapterSection from '../../../components/case-study/ChapterSection.astro';
+import JourneyRail from '../../../components/case-study/JourneyRail.astro';
+import ZoomOverlaySystem from '../../../components/case-study/ZoomOverlaySystem.astro';
+import EvidenceChip from '../../../components/case-study/EvidenceChip.astro';
+import { hero, chapters, zoomIns, diagrams } from '../../../data/case-studies/apartment-scout';
+---
+
+<Layout
+  title="Apartment Scout — Case Study | Ben Stuart"
+  description="An AI-assisted apartment search tool that discovered relevant Facebook communities, made fragmented rental listings comparable, and surfaced the property we ultimately selected."
+>
+  <header class="fixed top-0 left-0 right-0 z-50 mix-blend-multiply">
+    <div class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center">
+      <a href="/" class="font-heading text-sm font-medium tracking-tight" style="font-family: var(--font-heading)">
+        Ben Stuart
+      </a>
+      <a
+        href="/case-studies"
+        class="font-heading text-sm font-medium border border-current px-4 py-1.5 rounded-full transition-opacity duration-200 hover:opacity-60"
+        style="font-family: var(--font-heading)"
+      >
+        All case studies
+      </a>
+    </div>
+  </header>
+
+  <JourneyRail chapters={chapters} />
+
+  <main class="max-w-5xl mx-auto px-6">
+    <!-- Hero -->
+    <section class="min-h-screen flex flex-col justify-center pt-36 md:pt-24 pb-16">
+      <p class="section-label animate-fade-up delay-1 mb-8">Case study · Personal project · April–May 2026</p>
+      <h1
+        class="animate-fade-up delay-2 text-5xl md:text-7xl font-bold mb-8 leading-[1.05] tracking-tight"
+        style="font-family: var(--font-heading)"
+      >
+        {hero.title}
+      </h1>
+      <p class="animate-fade-up delay-3 text-lg md:text-2xl max-w-2xl leading-relaxed mb-6" style="color: var(--color-text)">
+        {hero.lead}
+      </p>
+      <p class="animate-fade-up delay-4 text-base md:text-lg max-w-2xl leading-relaxed" style="color: var(--color-muted)">
+        {hero.detail}
+      </p>
+
+      <div class="animate-fade-up delay-5 mt-12 flex flex-wrap gap-8 md:gap-12">
+        {hero.metrics.map((metric) => (
+          <div>
+            <p class="text-3xl md:text-4xl font-bold" style="font-family: var(--font-heading); color: var(--color-accent)">
+              {metric.label}
+            </p>
+            <p class="section-label mt-1 max-w-[12rem]">{metric.sublabel}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-4 text-sm" style="color: var(--color-muted)">{hero.metricsCaveat}</p>
+
+      <div class="mt-10 flex items-center gap-2" style="color: var(--color-muted)">
+        <div class="w-px h-10 bg-current opacity-30"></div>
+        <span class="section-label">Scroll for the full story</span>
+      </div>
+    </section>
+
+    <hr style="border-color: var(--color-border)" />
+
+    {chapters.map((chapter) => (
+      <>
+        <ChapterSection chapter={chapter} zoomIns={zoomIns} diagrams={diagrams} />
+        <hr style="border-color: var(--color-border)" />
+      </>
+    ))}
+
+    <!-- Explore the build -->
+    <section class="py-20 md:py-28 grid md:grid-cols-[1fr_2fr] gap-10 md:gap-16 md:ml-16">
+      <div>
+        <p class="section-label">Explore the build</p>
+      </div>
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-4" style="font-family: var(--font-heading)">
+          The product and engineering record behind this
+        </h2>
+        <p class="text-base leading-relaxed mb-6" style="color: var(--color-muted)">
+          A retrospective PRD, technical design, model evaluation, ranking specification, QA summary, decision log,
+          iteration timeline, and prompt-engineering notes — each labeled by how it was reconstructed.
+        </p>
+        <a
+          href="/case-studies/apartment-scout/build"
+          class="font-heading text-sm font-medium border border-current px-5 py-2 rounded-full inline-flex items-center gap-2 transition-opacity hover:opacity-60"
+          style="font-family: var(--font-heading)"
+        >
+          Explore the build →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="max-w-5xl mx-auto px-6 py-8 flex justify-between items-center" style="border-top: 1px solid var(--color-border)">
+    <span class="section-label">© 2026 Ben Stuart</span>
+    <a href="/" class="section-label">bstuart.co</a>
+  </footer>
+
+  <ZoomOverlaySystem zooms={zoomIns} diagrams={diagrams} />
+</Layout>

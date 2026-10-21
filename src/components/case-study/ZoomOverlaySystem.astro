@@ -1,0 +1,182 @@
+---
+import type { ZoomIn, DiagramDef } from '../../data/case-studies/apartment-scout';
+import EvidenceChip from './EvidenceChip.astro';
+import DiagramFrame from './DiagramFrame.astro';
+
+interface Props {
+  zooms: ZoomIn[];
+  diagrams: Record<string, DiagramDef>;
+}
+
+const { zooms, diagrams } = Astro.props;
+---
+
+<div id="zoom-overlay-backdrop" class="zoom-overlay-backdrop fixed inset-0 z-[90] hidden" data-open="false" data-zoom-backdrop></div>
+
+<div
+  id="zoom-overlay-panel"
+  class="zoom-overlay-panel fixed inset-0 md:inset-y-0 md:right-0 md:left-auto md:w-full md:max-w-xl z-[100] hidden overflow-y-auto"
+  data-open="false"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="zoom-overlay-title"
+  data-zoom-panel
+>
+  <div class="max-w-xl mx-auto px-6 md:px-10 py-8 md:py-12">
+    <button
+      type="button"
+      class="section-label mb-10 inline-flex items-center gap-2"
+      data-zoom-close
+      aria-label="Close detail panel"
+    >
+      <span aria-hidden="true">←</span> Close
+    </button>
+    <div data-zoom-mount></div>
+  </div>
+</div>
+
+{zooms.map((zoom) => (
+  <template id={`zoom-tpl-${zoom.id}`}>
+    <p class="section-label mb-4">{zoom.question}</p>
+    <h3 id="zoom-overlay-title" class="text-2xl md:text-3xl font-bold mb-4" style="font-family: var(--font-heading)">{zoom.title}</h3>
+    <div class="mb-6"><EvidenceChip tier={zoom.evidenceTier} /></div>
+    <div class="space-y-4 text-base leading-relaxed" style="color: var(--color-text)" set:html={zoom.body.split('\n\n').map((p) => `<p>${p}</p>`).join('')} />
+    {zoom.diagramId && diagrams[zoom.diagramId] && (
+      <DiagramFrame diagram={diagrams[zoom.diagramId]} />
+    )}
+    <blockquote class="mt-8 pl-4 border-l-2 text-base font-medium" style={`border-color: var(--color-accent); color: var(--color-text)`}>
+      {zoom.takeaway}
+    </blockquote>
+  </template>
+))}
+
+<script>
+  type ZoomState = { openerEl: HTMLElement | null };
+  const state: ZoomState = { openerEl: null };
+
+  function getEls() {
+    return {
+      backdrop: document.querySelector<HTMLElement>('[data-zoom-backdrop]'),
+      panel: document.querySelector<HTMLElement>('[data-zoom-panel]'),
+      mount: document.querySelector<HTMLElement>('[data-zoom-mount]'),
+      closeBtn: document.querySelector<HTMLElement>('[data-zoom-close]'),
+    };
+  }
+
+  function focusableElements(container: HTMLElement) {
+    return Array.from(
+      container.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      )
+    );
+  }
+
+  function trapFocus(e: KeyboardEvent, panel: HTMLElement) {
+    if (e.key !== 'Tab') return;
+    const focusable = focusableElements(panel);
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
+  function openZoom(id: string, opener: HTMLElement | null, pushHistory: boolean) {
+    const { backdrop, panel, mount, closeBtn } = getEls();
+    const tpl = document.getElementById(`zoom-tpl-${id}`) as HTMLTemplateElement | null;
+    if (!backdrop || !panel || !mount || !tpl) return;
+
+    state.openerEl = opener;
+    mount.innerHTML = '';
+    mount.appendChild(tpl.content.cloneNode(true));
+
+    backdrop.classList.remove('hidden');
+    panel.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      backdrop.setAttribute('data-open', 'true');
+      panel.setAttribute('data-open', 'true');
+    });
+    document.body.style.overflow = 'hidden';
+    (closeBtn as HTMLElement | null)?.focus();
+
+    if (pushHistory) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('detail', id);
+      history.pushState({ zoomId: id }, '', url);
+    }
+  }
+
+  function closeZoom(viaPopstate: boolean) {
+    const { backdrop, panel } = getEls();
+    if (!backdrop || !panel) return;
+    if (backdrop.classList.contains('hidden')) return;
+
+    backdrop.setAttribute('data-open', 'false');
+    panel.setAttribute('data-open', 'false');
+    document.body.style.overflow = '';
+
+    setTimeout(() => {
+      backdrop.classList.add('hidden');
+      panel.classList.add('hidden');
+    }, 200);
+
+    state.openerEl?.focus();
+
+    if (!viaPopstate) {
+      const url = new URL(window.location.href);
+      if (url.searchParams.has('detail')) {
+        history.back();
+      }
+    }
+  }
+
+  function initZoomSystem() {
+    const { backdrop, panel, closeBtn } = getEls();
+    if (!backdrop || !panel) return;
+
+    document.querySelectorAll<HTMLElement>('[data-zoom-trigger]').forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const id = trigger.dataset.zoomId;
+        if (id) openZoom(id, trigger, true);
+      });
+    });
+
+    closeBtn?.addEventListener('click', () => closeZoom(false));
+    backdrop.addEventListener('click', () => closeZoom(false));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && panel.getAttribute('data-open') === 'true') {
+        closeZoom(false);
+      }
+      if (panel.getAttribute('data-open') === 'true') {
+        trapFocus(e, panel);
+      }
+    });
+
+    window.addEventListener('popstate', () => {
+      const url = new URL(window.location.href);
+      const id = url.searchParams.get('detail');
+      if (id && document.getElementById(`zoom-tpl-${id}`)) {
+        openZoom(id, null, false);
+      } else {
+        closeZoom(true);
+      }
+    });
+
+    const initialId = new URL(window.location.href).searchParams.get('detail');
+    if (initialId && document.getElementById(`zoom-tpl-${initialId}`)) {
+      openZoom(initialId, null, false);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initZoomSystem);
+  } else {
+    initZoomSystem();
+  }
+</script>

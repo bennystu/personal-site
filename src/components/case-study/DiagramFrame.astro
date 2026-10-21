@@ -1,0 +1,61 @@
+---
+import type { DiagramDef } from '../../data/case-studies/apartment-scout';
+
+interface Props {
+  diagram: DiagramDef;
+}
+
+const { diagram } = Astro.props;
+---
+
+<figure class="diagram-frame p-4 md:p-6 my-6">
+  {diagram.kind === 'journey' ? (
+    <div class="grid sm:grid-cols-3 gap-4">
+      {diagram.columns.map((col) => (
+        <div>
+          <p class="section-label mb-2">{col.heading}</p>
+          <ul class="space-y-2">
+            {col.items.map((item) => (
+              <li class="text-sm rounded-lg px-3 py-2" style="background-color: var(--color-accent-soft); color: var(--color-text)">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div>
+      <div class="flex flex-wrap items-center gap-2">
+        {diagram.steps.map((step, i) => (
+          <>
+            <span class="text-sm rounded-lg px-3 py-2 inline-block" style="background-color: var(--color-accent-soft); color: var(--color-text)">
+              {step}
+            </span>
+            {i < diagram.steps.length - 1 && (
+              <span aria-hidden="true" style="color: var(--color-accent)">→</span>
+            )}
+          </>
+        ))}
+      </div>
+
+      {diagram.branch && (
+        <div class="mt-4 pl-4 border-l-2" style="border-color: var(--color-accent)">
+          <p class="text-sm font-medium mb-2" style="color: var(--color-text)">{diagram.branch.question}</p>
+          <div class="space-y-2">
+            {diagram.branch.outcomes.map((outcome) => (
+              <p class="text-sm" style="color: var(--color-muted)">
+                <span class="font-medium" style="color: var(--color-text)">{outcome.label}:</span> {outcome.detail}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {diagram.note && (
+        <p class="mt-4 text-sm italic" style="color: var(--color-muted)">{diagram.note}</p>
+      )}
+    </div>
+  )}
+  <figcaption class="mt-4 text-sm" style="color: var(--color-muted)">{diagram.title}</figcaption>
+</figure>

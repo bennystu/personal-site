@@ -1,0 +1,16 @@
+---
+interface Props {
+  tier: 'verified' | 'source-described' | 'unverified' | 'illustrative';
+}
+
+const { tier } = Astro.props;
+
+const labels: Record<Props['tier'], string> = {
+  verified: 'Verified by user',
+  'source-described': 'Described in source draft',
+  illustrative: 'Illustrative',
+  unverified: 'Unverified',
+};
+---
+
+<span class="evidence-chip" data-tier={tier}>{labels[tier]}</span>
