@@ -1,6 +1,8 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import DiagramFrame from '../../../components/case-study/DiagramFrame.astro';
 import { artifacts } from '../../../data/case-studies/apartment-scout-artifacts';
+import { diagrams } from '../../../data/case-studies/apartment-scout';
 ---
 
 <Layout
@@ -50,9 +52,32 @@ import { artifacts } from '../../../data/case-studies/apartment-scout-artifacts'
           <h2 class="text-2xl md:text-3xl font-bold mb-2" style="font-family: var(--font-heading)">
             {artifact.title}
           </h2>
-          <p class="section-label mb-8" style="color: var(--color-muted)">
-            {artifact.statusLabel}
-          </p>
+          {artifact.statusLabel && (
+            <p class="section-label mb-8" style="color: var(--color-muted)">
+              {artifact.statusLabel}
+            </p>
+          )}
+
+          {artifact.diagramId && diagrams[artifact.diagramId] && (
+            <DiagramFrame diagram={diagrams[artifact.diagramId]} />
+          )}
+
+          {artifact.screenshots && artifact.screenshots.length > 0 && (
+            <div class="my-6 space-y-6">
+              {artifact.screenshots.map((shot) => (
+                <figure>
+                  <img
+                    src={shot.src}
+                    alt={shot.caption}
+                    loading="lazy"
+                    class="w-full rounded-lg border"
+                    style="border-color: var(--color-border)"
+                  />
+                  <figcaption class="mt-2 text-sm" style="color: var(--color-muted)">{shot.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          )}
 
           {artifact.sections.map((section) => (
             <div class="mb-8">

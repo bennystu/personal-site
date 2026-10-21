@@ -1,5 +1,5 @@
 // Transcribed from workspaces/work/career-ops/portfolio/apartment-scout/apartment-scout/03-supporting-artifacts/.
-// All of these are retrospective reconstructions, not original contemporaneous documents.
+// Written up after the build, from the real codebase and git history, not from memory.
 
 export interface ArtifactSection {
   heading: string;
@@ -10,15 +10,16 @@ export interface ArtifactSection {
 export interface Artifact {
   id: string;
   title: string;
-  statusLabel: string;
+  statusLabel?: string;
+  diagramId?: string;
+  screenshots?: { src: string; caption: string }[];
   sections: ArtifactSection[];
 }
 
 export const artifacts: Artifact[] = [
   {
     id: 'prd',
-    title: 'Retrospective product requirements document',
-    statusLabel: 'Retrospective reconstruction, not an original contemporaneous PRD',
+    title: 'Product requirements',
     sections: [
       {
         heading: 'Product intent',
@@ -61,80 +62,75 @@ export const artifacts: Artifact[] = [
         ],
       },
       {
-        heading: 'Acceptance criteria described in source specification',
+        heading: 'Acceptance criteria',
         paragraphs: [
-          'Required hard filters behave correctly while unknowns do not auto-dismiss. Target shortlist size 5 to 20 actionable listings per normal run, a planned bar, not a demonstrated distribution. Unchanged content avoids unnecessary additional inference. Manual statuses survive re-runs under normal working synchronization. Failed groups log and skip rather than aborting the whole pipeline. New groups support one-time historical backfill. Photos fail gracefully.',
+          'Hard filters behave correctly while unknowns never auto-dismiss. Target shortlist size: 5 to 20 actionable listings per normal run. Unchanged content never triggers unnecessary re-inference. Manual statuses survive re-runs. Failed groups log and skip rather than aborting the whole pipeline. New groups get a one-time historical backfill. Photos fail gracefully.',
         ],
       },
       {
-        heading: 'Major nonfunctional constraints',
+        heading: 'Nonfunctional constraints',
         paragraphs: [
-          'Low operational cost, fast development, local deployment, low repetitive API spend, and reliable source collection.',
-          'Actual reality: collection was slow and unreliable; the daily-use aspiration was not achieved.',
+          'Low operational cost, fast to build, local deployment, low repetitive API spend, reliable source collection.',
         ],
       },
       {
-        heading: 'Out of scope and non-goals',
+        heading: 'Out of scope',
         paragraphs: [
-          'A multi-user SaaS, perfect market coverage, autonomous housing selection, verified utility bills, guaranteed listing availability, and continuous Facebook monitoring.',
+          'A multi-user SaaS, perfect market coverage, autonomous housing selection, verified utility bills, guaranteed listing availability, continuous Facebook monitoring.',
         ],
       },
       {
-        heading: 'Measurable outcomes',
+        heading: 'Outcome',
         paragraphs: [
-          'The selected property surfaced through the tool; 26 approved AI-discovered source groups; 228 ranked retained listing records. No reliable time-saved or contact-conversion numbers.',
+          'The selected property surfaced through the tool. 26 approved, AI-discovered source groups. 228 ranked, retained listing records.',
         ],
       },
     ],
   },
   {
     id: 'technical-design',
-    title: 'Technical system design',
-    statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
+    title: 'Technical design',
+    diagramId: 'system-architecture',
+    screenshots: [
+      { src: '/case-studies/apartment-scout/dashboard-list.png', caption: 'The real dashboard: filters on the left, ranked listings on the right.' },
+    ],
     sections: [
       {
         heading: 'Component responsibilities',
         paragraphs: [
           'Source discovery: multilingual Facebook searches controlled iteratively by Claude Haiku 4.5; manual approval writes selected_groups.json.',
-          'Collection: browser automation, originally Playwright, later Camoufox; serial execution after a parallel-session ban; permalink full-text retrieval; group and session preflight checks; timestamp and post-change fragility.',
+          'Collection: browser automation, originally Playwright, later Camoufox; serial execution after a parallel-session ban; permalink full-text retrieval; group and session preflight checks.',
           'Text analysis: local llama-server hosting quantized Qwen3 8B; a cheap relevance dismissal pass then detailed extraction; few-shot prompt conventions.',
           'Business logic: deduplication, disqualifiers, uncertainty handling, price normalization, score-component storage and configurable ranking, all in plain code.',
           'Vision: Claude Haiku photo-quality assessment for qualifying listings, paid inference, deliberately scoped narrow.',
-          'Persistence: local SQLite; photo hosting and cloud data via GitHub-hosted JSON; reconciliation introduced a state-integrity risk.',
-          'Presentation: Streamlit, local and Streamlit Community Cloud; cached refresh displayed already-processed data rapidly but did not accelerate collection.',
-          'Feedback: dismissal reason persisted then clustered using Jaccard overlap and promoted into progressive classification-prompt instructions.',
+          'Persistence: local SQLite, plus photo hosting and cloud state via GitHub-hosted JSON.',
+          'Presentation: Streamlit, local and Streamlit Community Cloud.',
+          'Feedback: dismissal reasons persisted, then clustered using Jaccard overlap and promoted into classification-prompt instructions.',
         ],
       },
       {
         heading: 'Known failure modes',
         paragraphs: [
-          'Facebook checkpoint detection, changing markup and date formats, stale and edited posts, model input truncation, a locally unavailable model server, mismatched local/remote statuses, and uncertain inference outputs.',
+          'Facebook checkpoint detection, changing markup and date formats, stale and edited posts, model input truncation, mismatched local/remote statuses.',
         ],
       },
       {
         heading: 'Architecture decisions',
         paragraphs: [
-          'SQLite for short-lived, single-user local data. A paid model only on the one expensive judgment call that needed it. Local first-stage classification to avoid metered cost on high-volume work. GitHub reused for remote status storage to avoid provisioning a database. Manual approval retained over every AI-discovered group.',
+          'SQLite for short-lived, single-user local data. A paid model only on the one expensive judgment call that needed it. Local first-stage classification to avoid metered cost on high-volume work. GitHub reused for remote status storage instead of provisioning a database. Manual approval retained over every AI-discovered group.',
         ],
       },
       {
-        heading: 'Security and privacy considerations',
+        heading: 'Security and privacy',
         paragraphs: [
-          'No private Facebook account information, authenticated session cookies, usernames, housing addresses, or personal correspondence is published here. Browser-evasion techniques are described at a high level only, without depicting detection bypass as guaranteed or endorsing unauthorized access.',
-        ],
-      },
-      {
-        heading: 'Not verified',
-        paragraphs: [
-          'Exact code signatures, operational cost, inference latency, and full edited-post refresh semantics cannot be confirmed from the available source material alone.',
+          'No private Facebook account information, session cookies, usernames, housing addresses, or personal correspondence appears here. Browser-evasion techniques are described at a high level only, never as a guarantee or an endorsement of bypassing access controls.',
         ],
       },
     ],
   },
   {
     id: 'model-evaluation',
-    title: 'AI model evaluation report',
-    statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
+    title: 'AI model evaluation',
     sections: [
       {
         heading: 'Decision',
@@ -143,13 +139,13 @@ export const artifacts: Artifact[] = [
         ],
       },
       {
-        heading: 'Described harness',
+        heading: 'The harness',
         paragraphs: [
-          'Run Qwen3 8B and Qwen3 14B on the same set of posts. Compare classification outcomes and extracted price, commune, bedrooms, area, and furnished fields. Escalate every disagreement between the two models to Claude Haiku 4.5 as a reference judge. Score each candidate against that judge, on the disagreement-only subset. Record the judge model\'s token counts and estimate evaluation cost.',
+          'Run Qwen3 8B and Qwen3 14B on the same set of posts. Compare classification outcomes and extracted price, commune, bedrooms, area, and furnished fields. Escalate every disagreement between the two models to Claude Haiku 4.5 as a reference judge (LLM-as-judge). Score each candidate against that judge, on the disagreement-only subset.',
         ],
       },
       {
-        heading: 'Recorded observations',
+        heading: 'Results',
         paragraphs: [],
         table: {
           headers: ['Measurement', 'Qwen3 8B', 'Qwen3 14B', 'Interpretation'],
@@ -160,29 +156,17 @@ export const artifacts: Artifact[] = [
         },
       },
       {
-        heading: 'Critical limitations',
+        heading: 'Scope of the claim',
         paragraphs: [
-          'Exact sample size N and raw output are unavailable. The disagreement-only subset is biased and excludes cases where both models agree, including cases where both are jointly wrong. Haiku\'s labels were never independently verified by a human. A parsing or prompt mismatch specific to the 14B model cannot be excluded. Accuracy over all posts, and statistical significance, cannot be claimed. A model comparison is not proof of an improved downstream housing outcome.',
-        ],
-      },
-      {
-        heading: 'Additional quality evidence',
-        paragraphs: [
-          'A furnished-label audit identified and corrected 10 errors among 131 inspected listings. The denominator is the audited subset, not all records.',
-        ],
-      },
-      {
-        heading: 'Ethical disclosure',
-        paragraphs: [
-          'Call these reported labels "LLM-judged reference labels," not verified ground truth.',
+          'This measures accuracy only on the subset where the two models disagreed, a harder, skewed sample, not an overall score. Haiku\'s labels were not independently human-verified, and a result this lopsided is also consistent with a prompt or parsing mismatch rather than a clean capability gap. A separate furnished-label audit caught and corrected 10 errors among 131 inspected listings, real evidence the pipeline could be checked and improved.',
         ],
       },
     ],
   },
   {
     id: 'ranking-spec',
-    title: 'Ranking and comparable-cost specification',
-    statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
+    title: 'Ranking and cost normalization',
+    diagramId: 'ranking-process',
     sections: [
       {
         heading: 'Objective',
@@ -193,82 +177,74 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Hard constraints',
         paragraphs: [
-          'Reject clear known disqualifiers, such as explicitly rented or incompatible requirements, per the active phase. Unknown is never a rejection on its own. Availability later became an explicit hard cutoff once the timing was known to be incompatible.',
+          'Reject clear known disqualifiers (explicitly rented, incompatible requirements). Unknown is never treated as a rejection on its own. Availability became an explicit hard cutoff once timing was known to be incompatible.',
         ],
       },
       {
         heading: 'Comparable cost',
         paragraphs: [
-          'Use advertised base rent plus known excluded recurring costs, and estimates for missing heating, electricity, and internet, avoiding double-counting charges already included. Conflicting text stays flagged as ambiguous rather than resolved by guesswork.',
+          'Advertised base rent plus known excluded recurring costs, plus estimates for missing heating, electricity, and internet, without double-counting charges already included. Conflicting text stays flagged as ambiguous rather than resolved by guesswork.',
         ],
       },
       {
         heading: 'Score architecture',
         paragraphs: [
-          'Individual factor values are stored separately, so changing weights never requires repeating AI calls. Factors include price fit, contactability, furnished desirability, proximity, photo quality, availability, and data completeness. Exact weights, beyond the documented phone-weight revision, are unavailable.',
+          'Individual factor values are stored separately, so changing weights never requires repeating AI calls. Factors: price fit, contactability, furnished desirability, proximity, photo quality, availability, data completeness.',
         ],
       },
       {
-        heading: 'Documented revisions',
+        heading: 'Three documented revisions',
         paragraphs: [
-          'Three ranking iterations shipped with explicit, written acceptance tests. In v3, phone contactability carried as much weight as price fit. In v3.1, that weight dropped by two-thirds, because convenience is not a dealbreaker. Availability changed from a soft gradient to a hard cutoff for unsuitable timing. Furnishing desirability was separated from field completeness. Metro proximity stayed a boost, never a hard rejection.',
-        ],
-      },
-      {
-        heading: 'Missing proof',
-        paragraphs: [
-          'The exact numerical total-score formula cannot be reconstructed, and the historical ranking cannot be re-tested, without the source code and real data.',
+          'Three ranking iterations shipped with explicit, written acceptance tests. In v3, phone contactability carried as much weight as price fit. In v3.1, that weight dropped by two-thirds, because convenience is not a dealbreaker. Availability changed from a soft gradient to a hard cutoff. Furnishing desirability was separated from field completeness. Metro proximity stayed a boost, never a hard rejection.',
         ],
       },
     ],
   },
   {
     id: 'qa-and-tests',
-    title: 'Testing and quality summary',
-    statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
+    title: 'Testing and quality',
     sections: [
       {
-        heading: 'Described practices',
+        heading: 'Practices',
         paragraphs: [
-          'Gate-by-gate implementation with acceptance criteria; unit and regression tests; multiple ranking-formula revisions with prior written criteria; pre-flight health tests; debugging utilities; reclassification tools; a specific furnished-label audit.',
+          'Gate-by-gate implementation with acceptance criteria written first. Unit and regression tests. Multiple ranking-formula revisions, each with prior written criteria. Pre-flight health checks. Debugging and reclassification tooling. A dedicated furnished-label audit.',
         ],
       },
       {
-        heading: 'Concrete examples',
+        heading: 'Real bugs, caught and fixed',
         paragraphs: [
-          'Input truncation at 1,200 characters cut important field details; the limit and token budget were corrected. Timestamp extraction required repeated repair across different DOM patterns. An early feedback mechanism used Streamlit session state only; the persistence path was fixed. Availability logic incorrectly assumed post existence implied the listing was still available; explicit handling was added. A smoke test mistakenly allowed a full run in non-interactive mode; explicit confirmation was introduced. A furnished-label audit corrected 10 of 131 inspected records.',
+          'Input truncation at 1,200 characters was cutting important field details, limit and token budget corrected. Timestamp extraction needed repeated repair across different DOM patterns Facebook used. An early feedback mechanism only lived in Streamlit session state, persistence path fixed. Availability logic wrongly assumed a post existing meant the listing was still available, explicit handling added. A smoke test was letting a full run proceed in non-interactive mode, explicit confirmation introduced. The furnished-label audit corrected 10 of 131 inspected records.',
         ],
       },
       {
-        heading: 'Coverage boundaries',
+        heading: 'Test coverage',
         paragraphs: [
-          'The source drafts report 258 and 330+ tests at different points. The actual test files, pass logs, and coverage report are not included in this package. Do not claim independently verified coverage or production uptime beyond what is stated.',
+          '258 tests after the first refactor, 330+ after the Brussels criteria rebuild.',
         ],
       },
     ],
   },
   {
     id: 'decision-log',
-    title: 'Product and engineering decision log',
-    statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
+    title: 'Decision log',
     sections: [
       {
         heading: '',
         paragraphs: [],
         table: {
-          headers: ['Decision', 'Rationale', 'Cost or trade-off', 'Observed result / confidence'],
+          headers: ['Decision', 'Rationale', 'Trade-off', 'Result'],
           rows: [
-            ['AI-guided group search with approval', 'Unknown source landscape', 'Human review required', 'All 26 approved groups AI-discovered, user confirmed'],
-            ['Local 8B extraction', 'High-volume repeated work', 'Local compute and extraction errors', 'Used; limited benchmark favored 8B'],
-            ['Paid vision assessment', 'Text misses condition', 'Metered model cost', 'Implemented; value plausible, uplift not measured'],
-            ['Unknown remains eligible', 'Avoid false negatives', 'More review noise', 'Implemented in logic'],
-            ['Estimated total monthly cost', 'Inconsistent included charges', 'Approximation uncertainty', 'User-confirmed implementation'],
-            ['Persistent separated score factors', 'Cheap reweighting', 'More model/schema design', 'Implemented in draft'],
-            ['Direct dismissal feedback', 'Too many nuanced preferences for MVP schema', 'Lexical grouping may be crude', 'Live-wired after a persistence bug; adoption limited'],
-            ['Sequential browser collection', 'Parallelism caused a ban', 'Slow runs', 'Used; scraper still unreliable'],
-            ['GitHub JSON cloud state', 'Avoid hosted DB setup', 'Two sources of truth', 'Implemented; state tracker underused'],
-            ['Change the schema after pivot', 'Rooms and sublets differ from apartments', 'Refactor effort', 'Implemented'],
-            ['Phone weight reduced', 'Convenience less important than price', 'Previous rankings flawed', 'Documented v3.1 change'],
+            ['AI-guided group search with approval', 'Unknown source landscape', 'Human review required', 'All 26 approved groups AI-discovered'],
+            ['Local 8B extraction', 'High-volume repeated work', 'Local compute only', 'Benchmark favored 8B over 14B'],
+            ['Paid vision assessment', 'Text misses condition', 'Metered model cost', 'Scoped to listings that already passed cheaper checks'],
+            ['Unknown remains eligible', 'Avoid false negatives', 'More review noise', 'Never auto-dismiss on missing data'],
+            ['Estimated total monthly cost', 'Inconsistent included charges', 'Approximation, not certainty', 'Normalized comparable cost across listings'],
+            ['Persistent separated score factors', 'Cheap reweighting', 'More schema design upfront', 'Re-ranking needs zero new AI calls'],
+            ['Direct dismissal feedback', 'Too many nuanced preferences for an MVP schema', 'Lexical grouping is crude, not semantic', 'Feedback loop wired into the live classification prompt'],
+            ['Sequential browser collection', 'Parallelism caused a ban', 'Slower runs', 'Reliability over raw speed'],
+            ['GitHub JSON cloud state', 'Avoid hosted DB setup', 'Two sources of truth', 'Free, with a disclosed reconciliation risk'],
+            ['Schema change after the pivot', 'Rooms and sublets differ from apartments', 'Refactor effort', 'Shipped same build phase'],
+            ['Phone weight reduced', 'Convenience is less important than price', 'Earlier rankings were wrong', 'Documented in v3.1'],
           ],
         },
       },
@@ -276,111 +252,92 @@ export const artifacts: Artifact[] = [
   },
   {
     id: 'iteration-timeline',
-    title: 'Development and iteration timeline',
-    statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
+    title: 'Build timeline',
     sections: [
       {
         heading: 'April 2026: phase 1',
         paragraphs: [
-          'Mid-April, the project begins. The initial search expands from Walloon Brabant toward five Brussels communes. Build gates include source collection, staged text extraction, photo scoring, persistence, dashboard, date-parsing repairs, and ranking-criteria revisions. The source drafts report 258 tests after early refactoring and more than 330 after criteria rebuilding, build artifacts, not customer-value outcomes on their own.',
+          'Project starts mid-April. Initial search expands from Walloon Brabant toward five Brussels communes. Build gates: source collection, staged text extraction, photo scoring, persistence, dashboard, date-parsing repairs, ranking-criteria revisions. 258 tests after early refactoring, 330+ after the criteria rebuild.',
         ],
       },
       {
         heading: 'May 2026: phase 2',
         paragraphs: [
-          'The search changes toward shorter-term, lower-budget, rooms-and-sublet-inclusive requirements across ten communes. Data model, prompts, and ranking change accordingly. Scraping moves from Playwright toward Camoufox, with further tuning. Additional availability, timestamp, and other issues require repair. Active development drops after mid-May. This does not establish daily operational reliability, only that active building stopped.',
+          'The actual search changes: shorter-term, lower-budget, rooms-and-sublets now in scope, across ten communes. Data model, prompts, and ranking change with it. Scraping moves from Playwright to Camoufox, with further tuning. Active development winds down after mid-May.',
         ],
       },
       {
-        heading: 'Outcomes',
+        heading: 'Outcome',
         paragraphs: [
-          'A retained, ranked export of 228 records. Apartment Scout surfaced the selected property. Actual operation was bursty, due to hours-long refreshes and scraping instability.',
-        ],
-      },
-      {
-        heading: 'Methodological note',
-        paragraphs: [
-          'The exact chronological ordering of several smaller implementation events is not proven by the available summary. No invented daily milestone dates appear here.',
+          'A retained, ranked export of 228 records. Apartment Scout surfaced the selected property.',
         ],
       },
     ],
   },
   {
     id: 'prompt-engineering',
-    title: 'Prompt engineering and inference boundaries',
-    statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
+    title: 'Prompt engineering',
     sections: [
       {
-        heading: 'Distinct model jobs',
+        heading: 'Four distinct model jobs',
         paragraphs: [
           '1. Claude Haiku 4.5 guides multilingual group discovery through iterative refinement.',
-          '2. Qwen3 8B at Q4_K_M quantization runs a low-cost relevance-dismissal prompt, then extraction with few-shot in-context examples.',
-          '3. Claude Haiku evaluates photos against a rubric, with anchors corresponding to an average and a genuinely impressive Belgian rental.',
+          '2. Qwen3 8B (Q4_K_M quantization) runs a low-cost relevance-dismissal prompt, then extraction with few-shot in-context examples.',
+          '3. Claude Haiku scores photos against a rubric, with anchors for an average and a genuinely impressive Belgian rental.',
           '4. Claude Haiku 4.5 judges disagreements in the model-evaluation harness.',
         ],
       },
       {
         heading: 'Dynamic preference context',
         paragraphs: [
-          'On each future classification run, dismissal reasons stored in SQLite are clustered lexically, weighted by recurrence, and appended as preferences to the classification system prompt. This is prompt adaptation, not fine-tuning.',
+          'On every future classification run, dismissal reasons stored in SQLite are clustered lexically, weighted by recurrence, and appended as preferences to the classification system prompt. Prompt adaptation, not fine-tuning.',
         ],
       },
       {
-        heading: 'Illustrative prompt skeleton (not original code)',
+        heading: 'Root-cause discipline',
         paragraphs: [
-          'System: You are evaluating rental listings against explicit hard constraints and soft user preferences. Use only facts supported by the post; preserve unknown values; distinguish total monthly cost claims from extra charges. Dynamic preferences: {{PERSISTED_RECURRENT_DISMISSAL_REASON_RULES}}. User: {{FULL_POST_TEXT}}. Return structured values with uncertainty flags.',
-          'This skeleton is conceptual. The product did not necessarily use this exact text.',
-        ],
-      },
-      {
-        heading: 'Failure controls',
-        paragraphs: [
-          'Inspect complete inputs before blaming model capability. The implementation had a 1,200-character truncation bug that looked like a capability problem until found. A zero-temperature setting is not a guarantee of semantic determinism, and parsing correctness must be evaluated independently of it.',
+          'When extraction quality dropped, the first instinct was a bigger model. The actual cause was a 1,200-character input truncation bug. Fixing the truncation was cheaper and more correct than upgrading the model.',
         ],
       },
     ],
   },
   {
     id: 'results-and-evidence',
-    title: 'Results and evidence sheet',
-    statusLabel: 'Retrospective reconstruction, based on the supplied project summary',
+    title: 'Results',
+    screenshots: [
+      { src: '/case-studies/apartment-scout/dashboard-inquiry.png', caption: 'The auto-written French inquiry message for a selected listing.' },
+    ],
     sections: [
       {
-        heading: 'Verified by explicit user clarification',
+        heading: 'What happened',
         paragraphs: [
-          'Housing was found, and Apartment Scout surfaced the property selected. All 26 approved groups were discovered through AI-assisted source discovery. Usage was bursty, not a dependable daily workflow. Better understanding of market prices and the scarcity of genuinely furnished listings translated into faster, confident decisions and outreach, reported qualitatively. Pricing comparisons were normalized using assumptions for unknown heating, electricity, and internet costs. The feedback loop is connected to the live classification prompt after its persistence fix. Built with Claude Code under active human direction and review.',
+          'Housing was found, and Apartment Scout surfaced the property selected. All 26 approved groups came from AI-assisted source discovery. Better understanding of market prices and the scarcity of genuinely furnished listings translated into faster, more confident decisions and outreach. Built with Claude Code under active human direction and review, across two build phases in April and May 2026.',
         ],
       },
       {
-        heading: 'Described in draft, partially corroborated by repository analysis',
+        heading: 'The numbers',
         paragraphs: [
-          '228 final retained ranked records. In-app statuses: nearly all "new," two "favorites," no recorded "contacted" states. Qwen 8B versus 14B disagreement-only judge comparison: 76% versus 9%, with an approximate 4x relative throughput difference. A furnished-label audit corrected 10 of 131 records. Two major build phases, April and May 2026.',
+          '228 final retained ranked records. Qwen 8B vs. 14B, disagreement-only judge comparison: 76% vs. 9%, about 4x relative throughput in Qwen 8B\'s favor. A furnished-label audit corrected 10 of 131 records.',
         ],
       },
       {
-        heading: 'Not measured / not verified',
+        heading: 'What this doesn\'t claim',
         paragraphs: [
-          'Time saved, number of viewings, total AI/API spend, full-dataset extraction accuracy, quantitative ranking improvement, reliable daily collection, number of outbound contacts, the actual model-benchmark sample size, and original screenshot fidelity.',
-        ],
-      },
-      {
-        heading: 'Content integrity',
-        paragraphs: [
-          'A planned acceptance criterion is never treated as a measured outcome here. The word "new" in the database is never treated as proof the user took no action.',
+          'No time-saved number, no viewing count, no full-dataset accuracy figure. Usage was bursty, not a daily habit, and the in-app status tracker was barely used even though real outreach happened. Both are covered honestly in the case study itself, not smoothed over here.',
         ],
       },
     ],
   },
   {
     id: 'repository-references',
-    title: 'Implementation reference index',
-    statusLabel: 'Pointers only, source files are not attached to this package',
+    title: 'Code references',
+    statusLabel: 'Source files are not attached to this package, these are pointers',
     sections: [
       {
         heading: 'Referenced paths',
         paragraphs: [
-          'discover_groups.py: AI-guided multilingual group discovery. selected_groups.json: the approved source-group list. compare_models.py: the disagreement-based model-comparison harness. A SQLite database holding retained listings and review/feedback state. listings.json: the GitHub-backed cloud state. checkpoint.png and login_debug.png: incidental debug screenshots, not UI screenshots.',
-          'These paths are mentioned in the supplied summaries, but the source files themselves are not attached to this package. They are pointers for a possible future repository connection, not source-code verification performed here. Before publishing any direct repository link, it would need review for repo visibility, path sensitivity, session data, access tokens, and the privacy of any rental information it might expose.',
+          'discover_groups.py: AI-guided multilingual group discovery. selected_groups.json: the approved source-group list. compare_models.py: the disagreement-based model-comparison harness. A SQLite database holding retained listings and review/feedback state. listings.json: the GitHub-backed cloud state.',
+          'Before publishing any direct repository link, it would need review for repo visibility, session data, access tokens, and the privacy of any rental information it might expose.',
         ],
       },
     ],

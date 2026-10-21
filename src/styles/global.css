@@ -200,6 +200,12 @@ a:hover {
 [data-reveal] ul li:nth-child(5) { transition-delay: 240ms; }
 [data-reveal] ul li:nth-child(6) { transition-delay: 300ms; }
 
+[data-title-scale] {
+  display: inline-block;
+  transform-origin: left top;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
     opacity: 1;
@@ -210,5 +216,8 @@ a:hover {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  [data-title-scale] {
+    transform: none !important;
   }
 }

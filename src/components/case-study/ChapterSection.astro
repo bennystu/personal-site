@@ -23,10 +23,16 @@ const chapterZooms = chapter.zoomIds
   data-chapter-eyebrow={chapter.eyebrow}
 >
   <div>
-    <p class="section-label">{chapter.eyebrow}</p>
+    <p
+      class="section-label"
+      data-title-scale
+      style="font-size: 0.95rem; font-weight: 700; letter-spacing: 0.08em; color: var(--color-text)"
+    >
+      {chapter.eyebrow}
+    </p>
   </div>
   <div data-reveal>
-    <h2 class="text-4xl md:text-6xl font-bold mb-4 leading-[1.05] tracking-tight" style="font-family: var(--font-heading)">
+    <h2 class="text-3xl md:text-4xl font-bold mb-3" style="font-family: var(--font-heading)">
       {chapter.heading}
     </h2>
     <p class="text-lg md:text-xl mb-6" style="color: var(--color-accent)">{chapter.summary}</p>
@@ -81,3 +87,44 @@ const chapterZooms = chapter.zoomIds
     )}
   </div>
 </section>
+
+<script>
+  function initTitleScale() {
+    const titles = Array.from(document.querySelectorAll<HTMLElement>('[data-title-scale]'));
+    if (titles.length === 0) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const MAX_SCALE = 2.4;
+    let ticking = false;
+
+    function update() {
+      ticking = false;
+      const vh = window.innerHeight;
+      const settlePoint = vh * 0.4;
+      titles.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const raw = (rect.top - settlePoint) / (vh - settlePoint);
+        const progress = Math.min(1, Math.max(0, raw));
+        const scale = 1 + progress * (MAX_SCALE - 1);
+        el.style.transform = `scale(${scale})`;
+      });
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTitleScale);
+  } else {
+    initTitleScale();
+  }
+</script>
