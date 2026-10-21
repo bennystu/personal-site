@@ -236,7 +236,7 @@ export const zoomIns: ZoomIn[] = [
     id: 'speed-attention',
     title: 'Notifications would have been faster, sometimes',
     question: 'Why not just use Facebook notifications instead?',
-    body: "Turning on notifications would sometimes win. Reacting to a brand-new post instantly can get you a viewing a slower tool can't. The real cost is checking your phone constantly, all day, for weeks. A batch tool has to make up for being slower somewhere else: wider coverage, clearer comparisons, faster calls once something good shows up.",
+    body: "Turning on notifications would sometimes win. Reacting to a brand-new post instantly can get you a viewing a slower tool can't. The real cost is checking your phone constantly, all day, for weeks.",
     takeaway: "Speed isn't free. The question is what you're trading it for.",
     evidenceTier: 'verified',
   },
@@ -320,9 +320,9 @@ export const zoomIns: ZoomIn[] = [
   {
     id: 'chosen-property',
     title: 'The one number that actually mattered',
-    question: 'Not a dashboard metric. A real outcome.',
-    body: "The thing that matters: it found the place we moved into. Not money saved, not a tidy funnel. It just worked. The 228 listings are candidates it ranked, not 228 places we visited.",
-    takeaway: 'The real outcome matters more than any processing count next to it.',
+    question: 'What the result actually was, past the dashboard numbers.',
+    body: "It found the place we moved into. No dollar figure attached, no tidy funnel, just that. The 228 listings are candidates it ranked, not 228 places we visited.",
+    takeaway: 'That single result outweighs every processing count sitting next to it.',
     evidenceTier: 'verified',
   },
   {
@@ -452,7 +452,7 @@ export const zoomIns: ZoomIn[] = [
     title: 'Built with Claude Code, not by it alone',
     question: 'Human-directed, AI-assisted, not autonomous.',
     body: 'Claude Code wrote and changed the actual code, across two build phases and plenty of iteration. Every call on scope, priority, trade-off, and what counted as done stayed mine. Nothing here was a single prompt producing a finished product on its own.',
-    takeaway: "Using AI leverage for implementation doesn't remove you from the product decisions.",
+    takeaway: "Having AI write the code doesn't take you out of the product decisions.",
     evidenceTier: 'verified',
   },
   {
@@ -515,7 +515,7 @@ export const chapters: Chapter[] = [
     eyebrow: '05 — Did it work',
     heading: 'It found the apartment we moved into',
     summary: 'A real result, from a genuinely messy process.',
-    body: "228 ranked listings came out the other end, pulled from 26 groups I'd never have found by hand. That data made me noticeably better at reading the market: real prices, how rare \"actually furnished\" is, and quicker to say yes or no. And it worked. Apartment Scout surfaced the place we moved into.\n\nIt wasn't glamorous getting there. The plan was to check it daily; in reality the scraper broke constantly and a refresh could take hours, so I used it in bursts. The \"contacted\" button barely got touched, most real outreach happened over Messenger, not inside my own app. None of that ended up mattering.",
+    body: "228 ranked listings came out the other end, pulled from 26 groups I'd never have found by hand. That data made me noticeably better at reading the market: real prices, how rare \"actually furnished\" is, and quicker to say yes or no. Apartment Scout surfaced the place we moved into.\n\nIt wasn't glamorous getting there. The plan was to check it daily; in reality the scraper broke constantly and a refresh could take hours, so I used it in bursts. The \"contacted\" button barely got touched, most real outreach happened over Messenger, not inside my own app. The apartment search still worked out fine.",
     zoomIds: ['bursty-usage', 'used-versus-built', 'chosen-property', 'market-confidence'],
   },
   {
