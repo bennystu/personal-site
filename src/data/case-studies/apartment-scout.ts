@@ -66,7 +66,13 @@ export interface JourneyDiagram {
   outcome: string;
 }
 
-export type DiagramDef = FlowDiagram | JourneyDiagram;
+export interface StaticDiagram {
+  kind: 'static';
+  title: string;
+  svg: string;
+}
+
+export type DiagramDef = FlowDiagram | JourneyDiagram | StaticDiagram;
 
 export const diagrams: Record<string, DiagramDef> = {
   'user-journey': {
@@ -181,6 +187,48 @@ export const diagrams: Record<string, DiagramDef> = {
       ],
     },
   },
+  'data-pipeline': {
+    kind: 'flow',
+    title: 'The full pipeline, start to finish',
+    steps: [
+      'Discover groups',
+      'Approve sources',
+      'Collect full posts',
+      'Classify relevance',
+      'Extract fields',
+      'Known-rule filtering',
+      'Deduplicate',
+      'Estimate missing utilities',
+      'Score photos',
+      'Rank and review',
+    ],
+    branch: {
+      after: 'Classify relevance',
+      question: 'Relevant?',
+      outcomes: [
+        { label: 'No', detail: 'Dropped from candidate review' },
+        { label: 'Yes', detail: 'Continues to field extraction' },
+      ],
+    },
+    note: 'A known rule mismatch during filtering also drops a listing from review, the same as an irrelevant classification.',
+  },
+  'cost-normalization': {
+    kind: 'flow',
+    title: 'What does an apartment actually cost?',
+    steps: [
+      'Advertised rent',
+      'Read inclusions and excluded charges',
+      'Known costs, plus assumed costs for any missing utility',
+      'Avoid double-counting charges already included',
+      'Estimated comparable monthly cost',
+    ],
+    note: 'Uncertainty in the comparison gets flagged, not hidden, whenever an assumption had to fill a real gap.',
+  },
+  'decision-transformation': {
+    kind: 'static',
+    title: 'From fragmented posts to comparable, ranked opportunities',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="210" viewBox="0 0 960 210" role="img" aria-label="From fragmented Facebook posts to comparable ranked opportunities"><rect width="960" height="210" fill="#F7F6F2"/><rect x="18" y="30" width="275" height="140" rx="14" fill="#E5EAE7"/><text x="38" y="65" font-family="sans-serif" font-size="21" fill="#17242B">Fragmented posts</text><text x="38" y="101" font-family="sans-serif" font-size="15" fill="#58656C">Incomplete, inconsistent</text><text x="38" y="125" font-family="sans-serif" font-size="15" fill="#58656C">Manual interpretation</text><path d="M311 101 H345" stroke="#247B73" stroke-width="3"/><path d="M341 94 l10 7 -10 7" fill="none" stroke="#247B73" stroke-width="3"/><rect x="366" y="30" width="230" height="140" rx="14" fill="#DAE9E4"/><text x="386" y="65" font-family="sans-serif" font-size="21" fill="#17242B">Interpret and compare</text><text x="386" y="101" font-family="sans-serif" font-size="15" fill="#58656C">Structured fields</text><text x="386" y="125" font-family="sans-serif" font-size="15" fill="#58656C">Price normalization</text><path d="M610 101 H648" stroke="#247B73" stroke-width="3"/><path d="M644 94 l10 7 -10 7" fill="none" stroke="#247B73" stroke-width="3"/><rect x="666" y="30" width="276" height="140" rx="14" fill="#247B73"/><text x="686" y="65" font-family="sans-serif" font-size="21" fill="white">Confident decisions</text><text x="686" y="101" font-family="sans-serif" font-size="15" fill="white">Prioritized opportunities</text><text x="686" y="125" font-family="sans-serif" font-size="15" fill="white">Faster go/no-go</text></svg>`,
+  },
 };
 
 export const zoomIns: ZoomIn[] = [
@@ -277,6 +325,144 @@ export const zoomIns: ZoomIn[] = [
     takeaway: 'The real outcome matters more than any processing count next to it.',
     evidenceTier: 'verified',
   },
+  {
+    id: 'fragmented-search',
+    title: 'What hunting for an apartment actually looked like',
+    question: 'Every single listing was its own research task.',
+    body: "Facebook groups held posts in different languages with no consistent format, no site-wide filters, and no way to compare two listings side by side. Duplicates, missing sizes, missing availability, all of it had to be reconstructed by hand, post by post.",
+    takeaway: "Fragmented information creates work, even before you've decided anything.",
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'marketplace-language',
+    title: "Tidy data can still hide real ambiguity",
+    question: "Translating a post isn't the same as extracting what it means.",
+    body: 'Posts used local rental shorthand like APD and ONO, mixed with informal French, Dutch, and English. "Toutes charges comprises" (all charges included) could still be followed, two lines later, by a separate service charge. The system had to tell a stated fact apart from an implied one, not just translate the words.',
+    takeaway: "Clean-looking data isn't the same as true data.",
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'market-confidence',
+    title: 'Understanding the market was itself valuable',
+    question: 'Does knowing the market count as a result, even without instrumentation?',
+    body: "Watching candidates accumulate built a real, working sense of normal asking prices and how rare genuinely furnished options were. That translated into faster, more confident go or no-go calls, and faster outreach. Neither effect has a before-and-after number attached to it.",
+    takeaway: 'Better decisions can be real value, even without a full automation story.',
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'availability',
+    title: "A listing existing doesn't mean it's available",
+    question: 'Stale and quietly edited posts broke an early assumption.',
+    body: 'Some listings were years old and still looked current. Others got edited in place, the same post, now saying "loué" or "plus disponible," without ever disappearing. That forced availability to become its own explicit field and filter, not something inferred from a post simply being there.',
+    takeaway: 'Freshness, identity, and availability are three different facts, not one.',
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'diagnostics',
+    title: 'Pre-flight checks, built from actual incidents',
+    question: 'Fail in five seconds, not five hours in.',
+    body: 'Checks were added for a valid login session, whether two browser contexts could reach Facebook without tripping a checkpoint, and whether the local model server was actually up. A separate diagnostic tool captured a screenshot and a structural summary of the page, for whenever Facebook changed its markup again.',
+    takeaway: "Build instrumentation for the failures you've actually hit, not hypothetical ones.",
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'full-text',
+    title: 'Getting the full post without clicking anything',
+    question: 'Every click is a chance to look like a bot.',
+    body: 'Facebook\'s feed view cuts long posts short behind "See more." Instead of clicking it, the scraper visits the post\'s own permalink page, reads every text block already in the page, and keeps the longest genuine one. Same result, zero extra clicks.',
+    takeaway: 'Understand how the page actually works before you automate clicking on it.',
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'input-truncation',
+    title: "The model wasn't failing, its input was missing",
+    question: 'A silent 1,200-character cutoff looked like a capability problem.',
+    body: 'Long posts were getting clipped before they ever reached the extraction step. The first instinct was to reach for a bigger model. The actual fix was raising the truncation limit and the token budget, and the model swap got reverted once that was found.',
+    takeaway: "Check what the model is actually seeing before you blame what it knows.",
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'reclassification',
+    title: "Old listings don't have to stay badly classified",
+    question: "An improvement shouldn't only help the data collected after it.",
+    body: 'A reclassification tool lets an improved prompt or model revisit listings already sitting in the database, instead of leaving early mistakes frozen in place while only new data benefits.',
+    takeaway: 'Build a way to apply improvements backward, not just forward.',
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'dashboard',
+    title: 'What actually showed up in the dashboard',
+    question: 'A real screenshot replaces what used to be a reconstruction here.',
+    body: 'Each Facebook post became a reviewable card: extracted fields, an estimated comparable cost, an availability flag, and a photo score, all in one place instead of scattered across a feed.',
+    takeaway: 'The tool changed how listings got reviewed, not just how they were displayed.',
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'local-qwen',
+    title: 'Why a small local model did the heavy lifting',
+    question: 'Repeated, high-volume work needed a model sized for the job, not the biggest one available.',
+    body: 'Qwen3 8B, quantized, ran locally through llama-server on my own Mac. Two prompts split the work: a cheap pass dismissed irrelevant posts, and only the roughly 15% that survived went through detailed extraction. Temperature zero made it repeatable, though not perfectly deterministic in practice.',
+    takeaway: 'Design the model choice around the task and the volume, not the parameter count.',
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'pipeline',
+    title: 'The full pipeline, start to finish',
+    question: 'Where ambiguous judgment calls end and explicit rules begin.',
+    body: 'Browser collection got the full post. Local Qwen3 8B dismissed irrelevant posts, then extracted fields from what survived. SQLite persisted and deduplicated. Plain code applied explicit filters and normalized cost. Claude Haiku scored photos, only for listings that made it that far. A weighted ranking fed the Streamlit dashboard. Caching meant unchanged listings never repeated a step.',
+    takeaway: "Spend a paid model's judgment only where it adds something code or a free model can't.",
+    evidenceTier: 'verified',
+    diagramId: 'data-pipeline',
+  },
+  {
+    id: 'vision',
+    title: 'Why photo scoring was worth paying for',
+    question: "Text alone can't tell you if an apartment actually looks lived-in.",
+    body: 'The real choice was staying entirely free and text-only, or paying to have a model actually look at the photos. Claude Haiku applied a fixed visual rubric, but only to listings that had already survived every cheaper filter. No measured lift was ever recorded, but it caught condition signals the listing text never mentioned.',
+    takeaway: "Spend inference budget on the one thing a different kind of model can tell you that text can't.",
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'cost-normalization',
+    title: 'What does an apartment actually cost?',
+    question: 'Two listings quoting the same rent can mean two different real prices.',
+    body: "Some posts included heating, electricity, and internet. Others didn't mention them at all. The system accounted for what was stated and filled in reasonable assumptions for what wasn't, to get one comparable estimated monthly cost instead of comparing a bare number to a fully-loaded one.",
+    takeaway: 'A comparable estimate beats an exact but incomparable number.',
+    evidenceTier: 'verified',
+    diagramId: 'cost-normalization',
+  },
+  {
+    id: 'information-to-decisions',
+    title: 'Collecting listings was never the actual job',
+    question: 'Hundreds of saved posts are still hundreds of research tasks.',
+    body: 'A real search tool had to answer fit, comparable cost, and urgency, not just hold more raw posts. In practice, just accumulating candidates over time sharpened my sense of typical prices and how rare genuinely good, furnished units actually were.',
+    takeaway: 'Market understanding was real value, even separate from any single listing.',
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'uncertainty',
+    title: 'Unknown is not the same as disqualified',
+    question: 'Rejecting every incomplete post would have thrown out good options.',
+    body: 'With few genuinely suitable listings around, dismissing every post missing a size or a furnished flag would have quietly removed real candidates. Explicit disqualifiers still got filtered out. Everything merely unknown stayed visible, accepting a bit more review noise in exchange for not missing something good.',
+    takeaway: 'Whether a false negative is expensive depends entirely on how scarce the good options are.',
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'claude-code',
+    title: 'Built with Claude Code, not by it alone',
+    question: 'Human-directed, AI-assisted, not autonomous.',
+    body: 'Claude Code wrote and changed the actual code, across two build phases and plenty of iteration. Every call on scope, priority, trade-off, and what counted as done stayed mine. Nothing here was a single prompt producing a finished product on its own.',
+    takeaway: "Using AI leverage for implementation doesn't remove you from the product decisions.",
+    evidenceTier: 'verified',
+  },
+  {
+    id: 'redo',
+    title: "What I'd actually do differently",
+    question: 'Which dependency should have been proven first.',
+    body: 'Collection reliability should have come before any dashboard polish. A next version would prove the data could actually be gathered reliably first, get extraction and comparison solid, instrument what I actually did with each listing, then only add features where real usage justified them.',
+    takeaway: 'De-risk the one thing everything else depends on, first.',
+    evidenceTier: 'verified',
+  },
 ];
 
 export const chapters: Chapter[] = [
@@ -287,7 +473,7 @@ export const chapters: Chapter[] = [
     heading: 'Brussels rentals live on Facebook',
     summary: "Finding an apartment meant doing Facebook's job for it.",
     body: "Decent furnished rentals in Brussels get posted across dozens of Facebook groups, in French, Dutch, and English, full of local shorthand, and gone within hours. Reading every post, comparing prices, checking photos. That's not browsing, that's a part-time job.\n\nTurning on notifications would have reacted faster, sometimes. But it meant staying glued to my phone all day, every day. A slower tool had to make up for that somewhere else: wider coverage, clearer comparisons, faster calls once something good turned up.",
-    zoomIds: ['speed-attention'],
+    zoomIds: ['speed-attention', 'fragmented-search'],
     diagramId: 'user-journey',
   },
   {
@@ -297,7 +483,8 @@ export const chapters: Chapter[] = [
     heading: 'I needed comparable data, not more of it',
     summary: 'Raw listings and decision-ready listings are not the same thing.',
     body: "A database of five hundred posts still leaves you mentally sorting through five hundred posts. What I actually needed were answers to three questions:\n\n- Does this place fit\n- Is it good value\n- Should I act now\n\nCleaning up the text didn't make it true either. Posts contradicted themselves, went stale, or got quietly edited to \"already rented.\" So the system had to say \"we don't know\" instead of guessing. Guessing wrong is worse than admitting a gap. Estimating the missing utility costs also turned wildly different listings into an apples-for-apples price, instead of comparing a bare rent figure to one that already included everything.",
-    zoomIds: [],
+    zoomIds: ['marketplace-language', 'availability', 'cost-normalization', 'information-to-decisions'],
+    diagramId: 'decision-transformation',
   },
   {
     id: 'product',
@@ -306,7 +493,7 @@ export const chapters: Chapter[] = [
     heading: 'From scattered posts to a shortlist',
     summary: 'One tool, built around the decisions I actually needed to make.',
     body: "One automated pipeline, handling data aggregation and cleaning end to end, one tool per job:\n\n- Claude Haiku found the Facebook groups worth watching, I approved all 26 by hand\n- A local Qwen3 8B model read every post and pulled out the useful fields\n- Plain code filtered and deduplicated\n- Claude Haiku looked at photos, but only for listings that survived everything cheaper first\n- Then a ranked shortlist, in a Streamlit dashboard\n\nIt didn't need to be perfect to be useful. Every run turned a pile of random posts into a short, comparable list. Just seeing real prices side by side made me faster and more confident, even on the ones I passed on.",
-    zoomIds: ['group-discovery', 'scraper-failures'],
+    zoomIds: ['group-discovery', 'scraper-failures', 'diagnostics', 'full-text', 'dashboard', 'pipeline'],
     diagramId: 'system-architecture',
     screenshots: [
       { src: '/case-studies/apartment-scout/dashboard-list.png', caption: 'The actual dashboard, filters on the left, ranked listings on the right.' },
@@ -320,7 +507,7 @@ export const chapters: Chapter[] = [
     heading: 'Where to use a model, where to use code',
     summary: 'A different tool for each kind of uncertainty.',
     body: "A different tool for each kind of uncertainty:\n\n- Claude Haiku for open-ended discovery, always with me approving the result\n- The small local model for the repetitive reading-and-extracting work, since it runs for free\n- Plain code wherever there's one right answer, no reason to pay for a model call when a rule gives the same result every time\n- The pricier vision model only once everything cheaper already said yes\n\nThe ranking formula needed fixing more than once too. An early version rated \"has a phone number\" as important as price. I caught that and cut its weight by two-thirds, because a phone number is a nice-to-have, not a dealbreaker. Ranking isn't really math. It's a list of opinions about what matters, just written down.",
-    zoomIds: ['requirements-pivot', 'ranking-evolution', 'feedback', 'model-evaluation', 'cloud-github'],
+    zoomIds: ['requirements-pivot', 'ranking-evolution', 'feedback', 'model-evaluation', 'cloud-github', 'input-truncation', 'reclassification', 'local-qwen', 'vision', 'uncertainty'],
   },
   {
     id: 'impact',
@@ -329,7 +516,7 @@ export const chapters: Chapter[] = [
     heading: 'It found the apartment we moved into',
     summary: 'A real result, from a genuinely messy process.',
     body: "228 ranked listings came out the other end, pulled from 26 groups I'd never have found by hand. That data made me noticeably better at reading the market: real prices, how rare \"actually furnished\" is, and quicker to say yes or no. And it worked. Apartment Scout surfaced the place we moved into.\n\nIt wasn't glamorous getting there. The plan was to check it daily; in reality the scraper broke constantly and a refresh could take hours, so I used it in bursts. The \"contacted\" button barely got touched, most real outreach happened over Messenger, not inside my own app. None of that ended up mattering.",
-    zoomIds: ['bursty-usage', 'used-versus-built', 'chosen-property'],
+    zoomIds: ['bursty-usage', 'used-versus-built', 'chosen-property', 'market-confidence'],
   },
   {
     id: 'reflection',
@@ -338,6 +525,6 @@ export const chapters: Chapter[] = [
     heading: 'Build the weakest link first',
     summary: 'In hindsight, I built the wrong half first.',
     body: "I'd fix the scraper before touching the dashboard. A flaky data feed undermines everything built on top of it, no matter how clever the ranking. I'd also track what I actually did with a listing, not just how it got classified, and let real usage decide what's worth building next instead of guessing.\n\nMostly though, this was a two-week tool for a personal problem, not a product. The fun part was seeing how far a bit of product thinking, plus the right AI model in the right place, could stretch a scrappy weekend-sized build.",
-    zoomIds: [],
+    zoomIds: ['claude-code', 'redo'],
   },
 ];
