@@ -441,9 +441,9 @@ export const zoomIns: ZoomIn[] = [
   {
     id: 'redo',
     title: "What I'd actually do differently",
-    question: 'Which dependency should have been proven first?',
-    body: 'Collection reliability should have come before any dashboard polish, because everything else depended on it. A next version would prove the data could be gathered reliably first, then get extraction and comparison solid, then instrument what I actually did with each listing, and only add features where real usage justified them.',
-    takeaway: 'De-risk the one thing everything else depends on, first.',
+    question: 'What would I budget differently next time?',
+    body: 'I did build collection first, and it worked when I moved on. What I got wrong was assuming it would stay working. Facebook kept changing its markup and tightening its bot detection, so collection needed continuous repair while I was spending my time on ranking and dashboard features. A next version would treat collection as a running cost with monitoring and quick diagnostics from day one, instrument what I actually did with each listing, and only add features where real usage justified them.',
+    takeaway: 'An adversarial dependency is a running cost, not a one-time build.',
     evidenceTier: 'verified',
   },
 ];
@@ -505,9 +505,9 @@ export const chapters: Chapter[] = [
     id: 'reflection',
     ordinal: 6,
     eyebrow: '06 — What I\'d change',
-    heading: 'Build the weakest link first',
-    summary: 'In hindsight, I built the wrong half first.',
-    body: "If I rebuilt this, I would fix the scraper before touching anything else. Collection was the layer everything depended on, and it was the least reliable part of the system. A flaky data feed undermines every clever thing built on top of it. Instead, I spent real effort on ranking and dashboard polish while the data underneath stayed unreliable.\n\nI would also instrument my own behaviour from day one. I built features based on what I assumed I would use, and the usage data later showed some of those assumptions were wrong. Tracking what I actually did with each listing would have told me what was worth building next, instead of guessing.\n\nThis was a tool for a personal problem, not a product, and I am comfortable with that framing. What I wanted to find out was how far product thinking plus the right AI model in the right place could stretch a solo build, and the answer was: further than I expected.",
+    heading: 'The scraper was never going to be finished',
+    summary: 'I underestimated how much the scraper would keep breaking.',
+    body: "I built collection first, and it worked, so I treated it as done and moved on to extraction, ranking, and the dashboard. That was the mistake. Scraping Facebook is not a component you finish; it is an ongoing fight against a platform that keeps changing its markup and actively hunts automation. The layer everything depended on needed a maintenance budget, not a checkmark, and I only learned that as it kept breaking underneath features I had already built on top of it.\n\nI would also instrument my own behaviour from day one. I built features based on what I assumed I would use, and the usage data later showed some of those assumptions were wrong. Tracking what I actually did with each listing would have told me what was worth building next, instead of guessing.\n\nThis was a tool for a personal problem, not a product, and I am comfortable with that framing. What I wanted to find out was how far product thinking plus the right AI model in the right place could stretch a solo build, and the answer was: further than I expected.",
     zoomIds: ['claude-code', 'redo'],
   },
 ];
