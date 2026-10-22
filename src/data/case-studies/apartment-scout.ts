@@ -35,7 +35,7 @@ export const hero = {
   lead:
     'I needed an apartment in Brussels, and the listings all live in messy Facebook groups. So I built a tool that found the right groups, turned the posts into comparable data, and ranked them. It surfaced the place we moved into.',
   detail:
-    "This was a personal project, built solo across April and May 2026 (the time it saved on manual reading mostly went straight back into building it). I picked the models, wrote the pipeline with Claude Code, and made every decision about what to build, what to skip, and when it was good enough.",
+    "This is product thinking applied to a personal problem: built solo across April and May 2026, the time it saved on manual reading went straight back into building it. I picked the models, wrote the pipeline with Claude Code, and made every decision about what to build, what to skip, and when it was good enough.",
   metrics: [
     { label: '26', sublabel: 'Facebook groups, AI-found and human-approved' },
     { label: '~19 hrs', sublabel: 'of manual reading saved, at roughly a minute per post across 1,137 posts' },
@@ -507,7 +507,7 @@ export const chapters: Chapter[] = [
     eyebrow: '06 — What I\'d change',
     heading: 'The scraper was never going to be finished',
     summary: 'I underestimated how much the scraper would keep breaking.',
-    body: "I built the scraper first, and it worked, so I marked it done and moved on. That was the mistake. Facebook keeps changing its markup and hunting bots, so the scraper kept breaking under everything I built on top of it. It needed ongoing maintenance, not a checkmark.\n\nI would also track my own usage from day one. Some features I was sure I would use went untouched. Knowing that earlier would have told me what to build next, instead of guessing.\n\nThis was a tool for a personal problem. The question was how far product thinking plus the right model in the right place could stretch a solo build. The answer: further than I expected.",
+    body: "I built the scraper first, and it worked, so I marked it done and moved on. That was the mistake. Facebook keeps changing its markup and hunting bots, so the scraper kept breaking under everything I built on top of it. It needed ongoing maintenance, not a checkmark.\n\nI would also track my own usage from day one. Some features I was sure I would use went untouched. Knowing that earlier would have told me what to build next, instead of guessing.\n\nThis project was about applying product thinking to a personal problem: how far the right model in the right place could stretch a solo build. The answer: further than I expected.",
     zoomIds: ['claude-code', 'redo'],
   },
 ];
