@@ -145,7 +145,7 @@ export const artifacts: Artifact[] = [
           headers: ['Measurement', 'Qwen3 8B', 'Qwen3 14B', 'Interpretation'],
           rows: [
             ['Per-field judge agreement on disagreements', '76%', '9%', 'Not full-dataset accuracy'],
-            ['Relative inference throughput', 'About 4x faster', 'Baseline', 'Same local hardware, per source draft'],
+            ['Relative inference throughput', 'About 4x faster', 'Baseline', 'Same local hardware'],
           ],
         },
       },
@@ -229,7 +229,7 @@ export const artifacts: Artifact[] = [
           headers: ['Decision', 'Rationale', 'Trade-off', 'Result'],
           rows: [
             ['AI-guided group search with approval', 'Unknown source landscape', 'Human review required', 'All 26 approved groups AI-discovered'],
-            ['Local 8B extraction', 'High-volume repeated work', 'Local compute only', 'Benchmark favored 8B over 14B'],
+            ['Local 8B extraction', 'Free and fast beats paid and slow for high-volume repeated work, if good enough', 'Local compute only', 'Benchmark against 14B supported the choice already made on cost and speed'],
             ['Paid vision assessment', 'Text misses condition', 'Metered model cost', 'Scoped to listings that already passed cheaper checks'],
             ['Unknown remains eligible', 'Avoid false negatives', 'More review noise', 'Never auto-dismiss on missing data'],
             ['Estimated total monthly cost', 'Inconsistent included charges', 'Approximation, not certainty', 'Normalized comparable cost across listings'],
@@ -316,7 +316,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'What this doesn\'t claim',
         paragraphs: [
-          'No time-saved number, no viewing count, no full-dataset accuracy figure. Usage was bursty, not a daily habit, and the in-app status tracker was barely used even though real outreach happened. Both are covered honestly in the case study itself, not smoothed over here.',
+          'There is no time-saved number, no viewing count, and no full-dataset accuracy figure. Usage was bursty rather than a daily habit, and the in-app status tracker was barely used even though real outreach happened over Messenger.',
         ],
       },
     ],
@@ -324,7 +324,7 @@ export const artifacts: Artifact[] = [
   {
     id: 'repository-references',
     title: 'Code references',
-    statusLabel: 'Source files are not attached to this package, these are pointers',
+    statusLabel: 'Key files in the private repository',
     sections: [
       {
         heading: 'Referenced paths',
