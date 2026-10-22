@@ -35,13 +35,12 @@ export const hero = {
   lead:
     'I needed an apartment in Brussels, and the listings all live in messy Facebook groups. So I built a tool that found the right groups, turned the posts into comparable data, and ranked them. It surfaced the place we moved into.',
   detail:
-    'This was a personal project, not a product, built solo across April and May 2026. I picked the models, wrote the pipeline with Claude Code, and made every decision about what to build, what to skip, and when it was good enough.',
+    "This was a personal project, not a product, built solo across April and May 2026 (the time it saved on manual reading mostly went straight back into building it). I picked the models, wrote the pipeline with Claude Code, and made every decision about what to build, what to skip, and when it was good enough.",
   metrics: [
     { label: '26', sublabel: 'Facebook groups, AI-found and human-approved' },
     { label: '~19 hrs', sublabel: 'of manual reading saved, at roughly a minute per post across 1,137 posts' },
     { label: '1', sublabel: 'apartment we actually moved into' },
   ],
-  metricsCaveat: "That time didn't become free time. It went into building the tool instead.",
 };
 
 // Diagrams render as static HTML/CSS (no client JS, no diagramming library) — a flowchart
