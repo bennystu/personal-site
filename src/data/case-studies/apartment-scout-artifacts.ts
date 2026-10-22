@@ -58,7 +58,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Acceptance criteria',
         paragraphs: [
-          'Hard filters behave correctly while unknowns never auto-dismiss. Target shortlist size: 5 to 20 actionable listings per normal run. Unchanged content never triggers unnecessary re-inference. Manual statuses survive re-runs. Failed groups log and skip rather than aborting the whole pipeline. New groups get a one-time historical backfill. Photos fail gracefully.',
+          'Hard filters behave correctly while unknowns never auto-dismiss. Target shortlist size: 5 to 20 actionable listings per normal run. Unchanged content never triggers unnecessary re-inference. Manual statuses survive re-runs. Failed groups log and skip rather than aborting the whole pipeline. New groups get a one-time historical backfill. A failure to load or score photos never stops the pipeline; the listing simply proceeds without a photo score.',
         ],
       },
       {
@@ -71,12 +71,6 @@ export const artifacts: Artifact[] = [
         heading: 'Out of scope',
         paragraphs: [
           'A multi-user SaaS, perfect market coverage, autonomous housing selection, verified utility bills, guaranteed listing availability, continuous Facebook monitoring.',
-        ],
-      },
-      {
-        heading: 'Outcome',
-        paragraphs: [
-          'The selected property surfaced through the tool. 26 approved, AI-discovered source groups. 228 ranked, retained listing records.',
         ],
       },
     ],
@@ -94,7 +88,7 @@ export const artifacts: Artifact[] = [
         paragraphs: [
           'Source discovery: multilingual Facebook searches controlled iteratively by Claude Haiku 4.5; manual approval writes selected_groups.json.',
           'Collection: browser automation, originally Playwright, later Camoufox; serial execution after a parallel-session ban; permalink full-text retrieval; group and session preflight checks.',
-          'Text analysis: local llama-server hosting quantized Qwen3 8B; a cheap relevance dismissal pass then detailed extraction; few-shot prompt conventions.',
+          'Text analysis: quantized Qwen3 8B running locally through llama-server. A cheap first pass dismissed irrelevant posts, then detailed extraction ran on the posts that passed, with worked examples in the prompt showing the model how to interpret listings.',
           'Business logic: deduplication, disqualifiers, uncertainty handling, price normalization, score-component storage and configurable ranking, all in plain code.',
           'Vision: Claude Haiku photo-quality assessment for qualifying listings, paid inference, deliberately scoped narrow.',
           'Persistence: local SQLite, plus photo hosting and cloud state via GitHub-hosted JSON.',
@@ -111,7 +105,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Architecture decisions',
         paragraphs: [
-          'SQLite for short-lived, single-user local data. A paid model only on the one expensive judgment call that needed it. Local first-stage classification to avoid metered cost on high-volume work. GitHub reused for remote status storage instead of provisioning a database. Manual approval retained over every AI-discovered group.',
+          'SQLite was chosen for short-lived, single-user local data. Local classification and extraction avoided per-call charges on the high-volume text work, while paid photo scoring ran only on listings that had passed every earlier check. Claude Haiku also handled group discovery and judged disagreements during model evaluation, both low-volume jobs. GitHub was reused for remote status storage instead of provisioning a database, and manual approval was retained over every AI-discovered group.',
         ],
       },
       {
@@ -129,7 +123,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Decision',
         paragraphs: [
-          'Choose a local model for high-volume extraction on real Facebook housing posts, rather than relying on published general benchmarks.',
+          'Local processing was chosen to avoid per-call charges on repeated, high-volume extraction. This evaluation checked the separate decision of which local model to run, Qwen3 8B or Qwen3 14B, using real Facebook housing posts rather than published general benchmarks. It did not compare local extraction against a paid service.',
         ],
       },
       {
@@ -144,7 +138,7 @@ export const artifacts: Artifact[] = [
         table: {
           headers: ['Measurement', 'Qwen3 8B', 'Qwen3 14B', 'Interpretation'],
           rows: [
-            ['Per-field judge agreement on disagreements', '76%', '9%', 'Not full-dataset accuracy'],
+            ['How often the model\'s answer matched the judge\'s, on disputed field values only', '76%', '9%', 'In the remaining cases the judge agreed with neither model'],
             ['Relative inference throughput', 'About 4x faster', 'Baseline', 'Same local hardware'],
           ],
         },
@@ -152,7 +146,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Scope of the claim',
         paragraphs: [
-          'This measures accuracy only on the subset where the two models disagreed, a harder, skewed sample, not an overall score. Haiku\'s labels were not independently human-verified, and a result this lopsided is also consistent with a prompt or parsing mismatch rather than a clean capability gap. A separate furnished-label audit caught and corrected 10 errors among 131 inspected listings, real evidence the pipeline could be checked and improved.',
+          'This measures agreement with Haiku only on the field values where the two local models disagreed, a harder, skewed sample. It does not establish either model\'s accuracy across the full dataset. Haiku\'s judgments were not independently human-verified, and a result this lopsided is also consistent with a prompt or parsing mismatch rather than a clean capability gap. A separate furnished-label audit caught and corrected 10 errors among 131 inspected listings, real evidence the pipeline could be checked and improved.',
         ],
       },
     ],
@@ -189,7 +183,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Three documented revisions',
         paragraphs: [
-          'Three ranking iterations shipped with explicit, written acceptance tests. In v3, phone contactability carried as much weight as price fit. In v3.1, that weight dropped by two-thirds, because convenience is not a dealbreaker. Availability changed from a soft gradient to a hard cutoff. Furnishing desirability was separated from field completeness. Metro proximity stayed a boost, never a hard rejection.',
+          'Each ranking revision shipped with written acceptance tests. In v3.1, the phone-contact weight dropped to a third of its v3 value. Known-incompatible availability became a hard exclusion instead of a soft gradient. Furnishing desirability was separated from field completeness, and metro proximity stayed a score boost, never a hard rejection.',
         ],
       },
     ],
@@ -250,19 +244,13 @@ export const artifacts: Artifact[] = [
       {
         heading: 'April 2026: phase 1',
         paragraphs: [
-          'Project starts mid-April. Initial search expands from Walloon Brabant toward five Brussels communes. Build gates: source collection, staged text extraction, photo scoring, persistence, dashboard, date-parsing repairs, ranking-criteria revisions. 258 tests after early refactoring, 330+ after the criteria rebuild.',
+          'The project started mid-April, and the search soon moved from Walloon Brabant to five Brussels communes. Collection, text extraction, photo scoring, storage, and the dashboard were built in stages, each with acceptance criteria written before implementation. Date parsing was repaired along the way and the ranking criteria were revised. The test suite grew from 258 tests after early refactoring to over 330 after the criteria rebuild.',
         ],
       },
       {
         heading: 'May 2026: reliability work continues',
         paragraphs: [
           'Scraping moves from Playwright to Camoufox after the account ban, with further tuning to actually stop detection. Timestamp parsing gets repaired again as Facebook changes its markup. Active development winds down after mid-May.',
-        ],
-      },
-      {
-        heading: 'Outcome',
-        paragraphs: [
-          'A retained, ranked export of 228 records. Apartment Scout surfaced the selected property.',
         ],
       },
     ],
