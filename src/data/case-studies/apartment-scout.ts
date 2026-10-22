@@ -41,7 +41,7 @@ export const hero = {
     { label: '~19 hrs', sublabel: 'of manual reading saved, at roughly a minute per post across 1,137 posts' },
     { label: '1', sublabel: 'apartment we actually moved into' },
   ],
-  metricsCaveat: "That time didn't become free time. It went into building the tool instead, which was its own valuable exercise.",
+  metricsCaveat: "That time didn't become free time. It went into building the tool instead.",
 };
 
 // Diagrams render as static HTML/CSS (no client JS, no diagramming library) — a flowchart
@@ -263,7 +263,7 @@ export const zoomIns: ZoomIn[] = [
     title: 'The ranking formula was wrong, twice',
     question: 'How do you know when your own ranking formula is wrong?',
     body: "The ranking went through three rewrites, and I wrote down the reasoning for each one. The embarrassing version weighted \"has a phone number\" as heavily as actual price. When I noticed that, I cut the phone-number weight by two-thirds, because a phone number is a convenience and price is a dealbreaker. The second fix concerned availability. A listing that was already rented, or not available by the date we needed, could still rank high on its other scores, so I changed availability from a soft preference in the formula to a hard cutoff: known-incompatible timing excluded a listing outright.",
-    takeaway: 'A ranking formula is just a list of opinions, written down and tested.',
+    takeaway: 'Watch for a weight that rewards convenience as much as the thing that actually matters.',
     evidenceTier: 'verified',
     diagramId: 'ranking-process',
   },
@@ -337,8 +337,8 @@ export const zoomIns: ZoomIn[] = [
     id: 'market-confidence',
     title: 'Understanding the market was itself valuable',
     question: 'Does knowing the market count as a result, even without instrumentation?',
-    body: "Watching candidates accumulate built a real, working sense of normal asking prices and how rare genuinely furnished options were. That translated into faster, more confident go or no-go calls, and faster outreach. Neither effect has a before-and-after number attached to it.",
-    takeaway: 'Better decisions can be real value, even without a full automation story.',
+    body: "Watching candidates accumulate built a genuine sense of normal asking prices and how rare genuinely furnished options were. That made my go or no-go calls faster and more confident, and made me quicker to reach out. Neither effect has a before-and-after number attached to it.",
+    takeaway: "Understanding the market was worth something, even with nothing to measure it against.",
     evidenceTier: 'verified',
   },
   {
@@ -435,7 +435,7 @@ export const zoomIns: ZoomIn[] = [
     id: 'claude-code',
     title: 'Built with Claude Code, not by it alone',
     question: 'How much of this did the AI actually build?',
-    body: 'Claude Code wrote and changed the actual code, across two build phases and plenty of iteration. Every decision about scope, priority, trade-offs, and what counted as done stayed mine. Nothing here was a single prompt producing a finished product on its own, and having AI write the code did not take me out of a single product decision.',
+    body: 'Claude Code wrote and changed the actual code, across two build phases and plenty of iteration. Every decision about scope, priority, trade-offs, and what counted as done stayed mine. Nothing here was a single prompt producing a finished product on its own.',
     takeaway: "Having AI write the code doesn't take you out of the product decisions.",
     evidenceTier: 'verified',
   },
@@ -499,7 +499,7 @@ export const chapters: Chapter[] = [
     eyebrow: '05 — Did it work',
     heading: 'It found the apartment we moved into',
     summary: 'Yes. It surfaced the apartment we moved into, through a messier process than planned.',
-    body: "The pipeline read and filtered 1,137 posts from 26 groups across three languages, roughly 19 hours of manual reading at a minute a post, and ranked the ones worth a look. That time didn't go back to me. It went into building the tool, which taught me more about the market and about product judgment than the reading itself would have. One of the ranked listings was the apartment we now live in, and the accumulated data made me noticeably better at reading the market along the way: real prices, how rare a genuinely furnished apartment is, and faster yes-or-no calls.\n\nGetting there was not glamorous. Unreliable collection meant I used the tool in bursts rather than daily, and some features I built, like the status tracker, never became part of how I actually worked. The search succeeded anyway, and the gap between what I built and what I used became one of the clearest lessons of the project.",
+    body: "The pipeline read and filtered 1,137 posts from 26 groups across three languages and ranked the ones worth a look. One of them was the apartment we now live in. The accumulated data also made me noticeably better at reading the market: real prices, how rare a genuinely furnished apartment is, and faster yes-or-no calls.\n\nGetting there was not glamorous. Unreliable collection meant I used the tool in bursts rather than daily, and some features I built, like the status tracker, never became part of how I actually worked. The search succeeded anyway, and the gap between what I built and what I used became one of the clearest lessons of the project.",
     zoomIds: ['bursty-usage', 'used-versus-built', 'chosen-property', 'market-confidence'],
   },
   {

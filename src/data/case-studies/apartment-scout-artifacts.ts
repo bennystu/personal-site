@@ -146,7 +146,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'Scope of the claim',
         paragraphs: [
-          'This measures agreement with Haiku only on the field values where the two local models disagreed, a harder, skewed sample. It does not establish either model\'s accuracy across the full dataset. Haiku\'s judgments were not independently human-verified, and a result this lopsided is also consistent with a prompt or parsing mismatch rather than a clean capability gap. A separate furnished-label audit caught and corrected 10 errors among 131 inspected listings, real evidence the pipeline could be checked and improved.',
+          'This measures agreement with Haiku only on the field values where the two local models disagreed, a harder, skewed sample. It does not establish either model\'s accuracy across the full dataset. Haiku\'s judgments were not independently human-verified, and a result this lopsided is also consistent with a prompt or parsing mismatch rather than a clean capability gap. A separate furnished-label audit caught and corrected 10 errors among 131 inspected listings.',
         ],
       },
     ],
@@ -292,7 +292,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'What happened',
         paragraphs: [
-          'Housing was found, and Apartment Scout surfaced the property selected. All 26 approved groups came from AI-assisted source discovery. Better understanding of market prices and the scarcity of genuinely furnished listings translated into faster, more confident decisions and outreach. Built with Claude Code under active human direction and review, across two build phases in April and May 2026.',
+          'Apartment Scout surfaced the apartment we chose. All 26 approved groups came from AI-assisted source discovery. A better understanding of market prices and the scarcity of genuinely furnished listings made decisions and outreach faster and more confident. Built with Claude Code under active human direction and review, across two build phases in April and May 2026.',
         ],
       },
       {
@@ -304,7 +304,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'What this doesn\'t claim',
         paragraphs: [
-          'There is no time-saved number, no viewing count, and no full-dataset accuracy figure. Usage was bursty rather than a daily habit, and the in-app status tracker was barely used even though real outreach happened over Messenger.',
+          'The 19-hour figure is a rough estimate (1,137 posts at a minute each), not a measured time saving, and it was spent building the tool rather than recovered. There is also no viewing count and no full-dataset accuracy figure. Usage was bursty rather than a daily habit, and the in-app status tracker was barely used even though real outreach happened over Messenger.',
         ],
       },
     ],
