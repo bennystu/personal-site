@@ -38,7 +38,7 @@ export const hero = {
     'This was a personal project, not a product, built solo across April and May 2026. I picked the models, wrote the pipeline with Claude Code, and made every decision about what to build, what to skip, and when it was good enough.',
   metrics: [
     { label: '26', sublabel: 'Facebook groups, AI-found and human-approved' },
-    { label: '228', sublabel: 'listings it ranked for me' },
+    { label: '1,137', sublabel: 'listings it read and filtered for me' },
     { label: '1', sublabel: 'apartment we actually moved into' },
   ],
 };
@@ -498,7 +498,7 @@ export const chapters: Chapter[] = [
     eyebrow: '05 — Did it work',
     heading: 'It found the apartment we moved into',
     summary: 'Yes. It surfaced the apartment we moved into, through a messier process than planned.',
-    body: "The pipeline collected and ranked hundreds of listings from 26 groups across three languages, and one of them was the apartment we now live in. The accumulated data also made me noticeably better at reading the market. I learned what real prices looked like, how rare a genuinely furnished apartment is, and that knowledge made my yes-or-no calls faster.\n\nGetting there was not glamorous. Unreliable collection meant I used the tool in bursts rather than daily, and some features I built, like the status tracker, never became part of how I actually worked. The search succeeded anyway, and the gap between what I built and what I used became one of the clearest lessons of the project.",
+    body: "The pipeline read and filtered 1,137 posts from 26 groups across three languages, ranked the ones worth a look, and one of them was the apartment we now live in. The accumulated data also made me noticeably better at reading the market. I learned what real prices looked like, how rare a genuinely furnished apartment is, and that knowledge made my yes-or-no calls faster.\n\nGetting there was not glamorous. Unreliable collection meant I used the tool in bursts rather than daily, and some features I built, like the status tracker, never became part of how I actually worked. The search succeeded anyway, and the gap between what I built and what I used became one of the clearest lessons of the project.",
     zoomIds: ['bursty-usage', 'used-versus-built', 'chosen-property', 'market-confidence'],
   },
   {
