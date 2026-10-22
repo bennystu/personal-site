@@ -38,9 +38,10 @@ export const hero = {
     'This was a personal project, not a product, built solo across April and May 2026. I picked the models, wrote the pipeline with Claude Code, and made every decision about what to build, what to skip, and when it was good enough.',
   metrics: [
     { label: '26', sublabel: 'Facebook groups, AI-found and human-approved' },
-    { label: '1,137', sublabel: 'listings it read and filtered for me' },
+    { label: '~19 hrs', sublabel: 'of manual reading saved, at roughly a minute per post across 1,137 posts' },
     { label: '1', sublabel: 'apartment we actually moved into' },
   ],
+  metricsCaveat: "That time didn't become free time. It went into building the tool instead, which was its own valuable exercise.",
 };
 
 // Diagrams render as static HTML/CSS (no client JS, no diagramming library) — a flowchart
@@ -498,7 +499,7 @@ export const chapters: Chapter[] = [
     eyebrow: '05 — Did it work',
     heading: 'It found the apartment we moved into',
     summary: 'Yes. It surfaced the apartment we moved into, through a messier process than planned.',
-    body: "The pipeline read and filtered 1,137 posts from 26 groups across three languages, ranked the ones worth a look, and one of them was the apartment we now live in. The accumulated data also made me noticeably better at reading the market. I learned what real prices looked like, how rare a genuinely furnished apartment is, and that knowledge made my yes-or-no calls faster.\n\nGetting there was not glamorous. Unreliable collection meant I used the tool in bursts rather than daily, and some features I built, like the status tracker, never became part of how I actually worked. The search succeeded anyway, and the gap between what I built and what I used became one of the clearest lessons of the project.",
+    body: "The pipeline read and filtered 1,137 posts from 26 groups across three languages, roughly 19 hours of manual reading at a minute a post, and ranked the ones worth a look. That time didn't go back to me. It went into building the tool, which taught me more about the market and about product judgment than the reading itself would have. One of the ranked listings was the apartment we now live in, and the accumulated data made me noticeably better at reading the market along the way: real prices, how rare a genuinely furnished apartment is, and faster yes-or-no calls.\n\nGetting there was not glamorous. Unreliable collection meant I used the tool in bursts rather than daily, and some features I built, like the status tracker, never became part of how I actually worked. The search succeeded anyway, and the gap between what I built and what I used became one of the clearest lessons of the project.",
     zoomIds: ['bursty-usage', 'used-versus-built', 'chosen-property', 'market-confidence'],
   },
   {

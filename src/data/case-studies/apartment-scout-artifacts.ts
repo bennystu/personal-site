@@ -298,7 +298,7 @@ export const artifacts: Artifact[] = [
       {
         heading: 'The numbers',
         paragraphs: [
-          '1,137 posts read and filtered. Qwen 8B vs. 14B, disagreement-only judge comparison: 76% vs. 9%, about 4x relative throughput in Qwen 8B\'s favor. A furnished-label audit corrected 10 of 131 records.',
+          '1,137 posts read and filtered, roughly 19 hours of manual reading at a minute a post. Qwen 8B vs. 14B, disagreement-only judge comparison: 76% vs. 9%, about 4x relative throughput in Qwen 8B\'s favor. A furnished-label audit corrected 10 of 131 records.',
         ],
       },
       {
